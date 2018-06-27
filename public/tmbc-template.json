@@ -1,0 +1,15 @@
+{
+    "program": [
+        "Welcome and Announcements",
+        {"name": "Hymn - ", "type": "song"},
+        {"name": "Scripture", "type": "reading"},
+        "Pastoral Prayer",
+        {"name": "Hymn - ", "type": "song"},
+        "Offertory Prayer",
+        "Offerings Received",
+        {"name": "Hymn - ", "type": "song"},
+        {"name": "Message", "type": "reading"},
+        {"name": "Hymn - ", "type": "song"},
+        "Benediction"
+    ]
+}
