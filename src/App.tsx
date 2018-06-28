@@ -27,9 +27,9 @@ function FullButton(props: FullButtonProps) {
   );
 }
 
-function PlusIcon() {
+function PlusIcon(props: {onClick?: any}) {
   return (
-    <svg className="icon" x="0px" y="0px" viewBox="0 0 100 100">
+    <svg className="icon" x="0px" y="0px" viewBox="0 0 100 100" onClick={props.onClick}>
       <rect x="0" y="0" width="100" height="100" />
       <rect x="5" y="5" width="90" height="90" fill="#fff" />
       <rect x="45" y="10" width="10" height="80" />
@@ -38,14 +38,24 @@ function PlusIcon() {
   );
 }
 
-function BackIcon() {
+function BackIcon(props: {onClick?: any}) {
   return (
-    <svg className="icon" width="100" height="100" viewBox="0 0 100 100">
+    <svg className="icon" width="100" height="100" viewBox="0 0 100 100" onClick={props.onClick}>
       <rect x="0" y="0" width="100" height="100" />
       <rect x="5" y="5" width="90" height="90" fill="#fff" />
       <polygon points="10,50 50,10 57,17 23,50 57,83 50,90" />
       <rect x="15" y="45" height="10" width="75" />
-      {/* <path d="M40 22h-24.34l11.17-11.17-2.83-2.83-16 16 16 16 2.83-2.83-11.17-11.17h24.34v-4z"/> */}
+    </svg>
+  );
+}
+
+function CloseIcon(props: {onClick?: any}) {
+  return (
+    <svg className="icon" width="100" height="100" viewBox="0 0 100 100" onClick={props.onClick}>
+      <rect x="0" y="0" width="100" height="100" />
+      <rect x="5" y="5" width="90" height="90" fill="#fff" />
+      <polygon points="10,15 15,10 90,85 85,90" />
+      <polygon points="90,15 85,10 10,85 15,90" />
     </svg>
   );
 }
@@ -75,7 +85,7 @@ class Page extends React.Component<PageProps, PageState> {
     return (
       <div>
         {backButton}
-        <Container className={this.props.className + 'animate fadeInUp page'}>
+        <Container className={this.props.className + ' animated fadeInUp page'}>
           <h1 className="title center">{this.props.title}</h1>
           {this.props.children}
         </Container>
@@ -108,23 +118,41 @@ function Create(props: any) {
   );
 }
 
+interface MenuProps {
+  title: string;
+  onClose: Function;
+}
+interface MenuState {}
+class Menu extends Component<MenuProps, MenuState> {
+  render() {
+    return (
+      <div className="menu animated slideInUp">
+        <Page title={this.props.title}>
+        <CloseIcon onClick={this.props.onClose}/>{this.props.children}</Page>
+      </div>
+    );
+  }
+}
+
 interface ProgramItemProps {
   item: any;
+  onClick: any; //change
+  id: number;
 }
-function ProgramItem({ item }: ProgramItemProps) {
-  if (typeof item === 'string') {
+function ProgramItem(props: ProgramItemProps) {
+  if (props.item.type === 'plain') {
     return (
       <li>
-        <h1>{item}</h1>
+        <h1>{props.item.title}</h1>
       </li>
     );
   }
 
-  if (typeof item === 'object') {
+  if (props.item.type !== 'plain') {
     return (
       <li>
-        <h1 className="add">{item.name}</h1>
-        <PlusIcon />
+        <h1 className="add">{props.item.title}</h1>
+        <PlusIcon onClick={() => {props.onClick(props.id)}}/>
       </li>
     );
   }
@@ -137,44 +165,66 @@ interface ProgramProps {
 }
 interface ProgramState {
   programData: Array<any>;
-  program: JSX.Element;
+  menu: {active: boolean, current: number};
 }
 class Program extends Component<ProgramProps, ProgramState> {
   constructor(props: ProgramProps) {
     super(props);
     this.state = {
-      program: <div />,
+      menu: {active: false, current: -1},
       programData: []
     };
   }
   async fetchTemplate() {
     const response = await fetch(this.props.template);
-    const json = await response.json();
-    if (json.program) {
+    let json = await response.json();
+    if (json.hasOwnProperty('program')) {
+      for(const item of json.program){
+        item["attended"] = false;
+      }
+      console.log(json.program);
       this.setState({ programData: json.program });
     }
+  }
+
+  handleAddClick = (id: number) => {
+    this.setState({menu: {active: true, current: id}});
   }
 
   componentDidMount() {
     this.fetchTemplate();
   }
+
+  handleCloseMenu(){
+    this.setState({menu: {active: false, current: -1}});
+    console.log('set state close menu');
+  }
+
   render() {
+    let menu: JSX.Element = <div />;
+    if(this.state.menu.active){
+      switch(this.state.programData[this.state.menu.current].type){
+        case "song": menu = <Menu title="song menu" onClose={this.handleCloseMenu.bind(this)} />;
+        break;
+        case "cover": menu = <Menu title="cover menu" onClose={this.handleCloseMenu.bind(this)}  />
+        break;
+        case "reading": menu = <Menu title="reading menu" onClose={this.handleCloseMenu.bind(this)}  />
+        break;
+        default: throw new Error("Program State stored incorrectly.");
+      }
+    }
+
     return (
-      <Page title="Create Program" back={true}>
-        {/* <FullButton label="(temp) fetch data" onClick={this.fetchTemplate.bind(this)}></FullButton> */}
-        <div className="program">
-          <ul>
-            {this.state.programData.map((item, index) => <ProgramItem key={index} item={item} />)}
-          </ul>
-        </div>
-        {/* <div className="program">
-          <ul>
-            <li><h1>Welcome and Announcements</h1></li>
-            <li><h1 className='add'>Hymn - Placeholder</h1><PlusIcon /></li>
-            <li><h1>Prayer</h1></li>
-          </ul>
-        </div> */}
-      </Page>
+      <div>
+        {menu}
+        <Page title="Create Program" back={true}>
+          <div className="program">
+            <ul>
+              {this.state.programData.map((item, index) => <ProgramItem key={index} item={item} onClick={this.handleAddClick.bind(this)} id={index}/>)}
+            </ul>
+          </div>
+        </Page>
+      </div>
     );
   }
 }
@@ -217,17 +267,16 @@ class App extends React.Component<AppProps, AppState> {
       <Router history={history}>
         <div>
           <div>
-            <form onSubmit={this.handleSubmit}>
+            {/* <form onSubmit={this.handleSubmit}>
               <input type="text" onChange={this.handleChange} />
             </form>
-            <pre>{this.state.hymnText}</pre>
+            <pre>{this.state.hymnText}</pre> */}
           </div>
           <div className="body">
             <Switch>
               <Route path="/home" component={Home} />
               <Route path="/create/TMBC" render={() => <Program template="tmbc-template.json" />} />
               <Route path="/create" component={Create} />
-              {/* <Route path="/jkl" render={() => <FullButton label="rico is a butt" />} /> */}
               <Redirect from="/" to="/home" />
             </Switch>
           </div>
