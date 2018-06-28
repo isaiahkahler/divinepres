@@ -3,7 +3,7 @@ import { Router, Route, Switch, RouteComponentProps, Redirect } from 'react-rout
 import { NavLink } from 'react-router-dom';
 import './App.css';
 import { createHashHistory } from 'history';
-import { fetchHymn } from './hymn-fetch';
+import { fetchHymn, fetchHymnTitle } from './hymn-fetch';
 
 const history = createHashHistory();
 
@@ -27,7 +27,7 @@ function FullButton(props: FullButtonProps) {
   );
 }
 
-function PlusIcon(props: {onClick?: any}) {
+function PlusIcon(props: { onClick?: any }) {
   return (
     <svg className="icon" x="0px" y="0px" viewBox="0 0 100 100" onClick={props.onClick}>
       <rect x="0" y="0" width="100" height="100" />
@@ -38,7 +38,7 @@ function PlusIcon(props: {onClick?: any}) {
   );
 }
 
-function BackIcon(props: {onClick?: any}) {
+function BackIcon(props: { onClick?: any }) {
   return (
     <svg className="icon" width="100" height="100" viewBox="0 0 100 100" onClick={props.onClick}>
       <rect x="0" y="0" width="100" height="100" />
@@ -49,7 +49,7 @@ function BackIcon(props: {onClick?: any}) {
   );
 }
 
-function CloseIcon(props: {onClick?: any}) {
+function CloseIcon(props: { onClick?: any }) {
   return (
     <svg className="icon" width="100" height="100" viewBox="0 0 100 100" onClick={props.onClick}>
       <rect x="0" y="0" width="100" height="100" />
@@ -94,6 +94,62 @@ class Page extends React.Component<PageProps, PageState> {
   }
 }
 
+interface MenuProps {
+  title: string;
+  onClose: Function;
+}
+interface MenuState {}
+class Menu extends Component<MenuProps, MenuState> {
+  render() {
+    return (
+      <div className="menu animated slideInUp">
+        <CloseIcon onClick={this.props.onClose} />
+        <Page title={this.props.title}>{this.props.children}</Page>
+      </div>
+    );
+  }
+}
+
+interface SearchProps {
+  onSubmit: any;
+  label: string;
+}
+interface SearchState {
+  value: string;
+}
+class Search extends Component<SearchProps, SearchState> {
+  constructor(props: any) {
+    super(props);
+    this.state = { value: '' };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleChange(event: any) {
+    this.setState({ value: event.target.value });
+  }
+
+  handleSubmit(event: any) {
+    this.props.onSubmit(this.state.value);
+    event.preventDefault();
+  }
+  render() {
+    return (
+      <div className="search">
+        <form onSubmit={this.handleSubmit}>
+          <input
+            type="text"
+            value={this.state.value}
+            onChange={this.handleChange}
+            placeholder={this.props.label}
+          />
+        </form>
+      </div>
+    );
+  }
+}
+
 function Home(props: any) {
   //ugh will probably have to convert to class to pull past pres. from storage
   return (
@@ -118,22 +174,6 @@ function Create(props: any) {
   );
 }
 
-interface MenuProps {
-  title: string;
-  onClose: Function;
-}
-interface MenuState {}
-class Menu extends Component<MenuProps, MenuState> {
-  render() {
-    return (
-      <div className="menu animated slideInUp">
-        <Page title={this.props.title}>
-        <CloseIcon onClick={this.props.onClose}/>{this.props.children}</Page>
-      </div>
-    );
-  }
-}
-
 interface ProgramItemProps {
   item: any;
   onClick: any; //change
@@ -152,7 +192,11 @@ function ProgramItem(props: ProgramItemProps) {
     return (
       <li>
         <h1 className="add">{props.item.title}</h1>
-        <PlusIcon onClick={() => {props.onClick(props.id)}}/>
+        <PlusIcon
+          onClick={() => {
+            props.onClick(props.id);
+          }}
+        />
       </li>
     );
   }
@@ -165,13 +209,13 @@ interface ProgramProps {
 }
 interface ProgramState {
   programData: Array<any>;
-  menu: {active: boolean, current: number};
+  menu: { active: boolean; current: number; options: Array<string> };
 }
 class Program extends Component<ProgramProps, ProgramState> {
   constructor(props: ProgramProps) {
     super(props);
     this.state = {
-      menu: {active: false, current: -1},
+      menu: { active: false, current: -1, options: [] },
       programData: []
     };
   }
@@ -179,38 +223,91 @@ class Program extends Component<ProgramProps, ProgramState> {
     const response = await fetch(this.props.template);
     let json = await response.json();
     if (json.hasOwnProperty('program')) {
-      for(const item of json.program){
-        item["attended"] = false;
+      for (const item of json.program) {
+        item['attended'] = false;
       }
-      console.log(json.program);
       this.setState({ programData: json.program });
     }
   }
 
-  handleAddClick = (id: number) => {
-    this.setState({menu: {active: true, current: id}});
-  }
+  handleAddClick = (id: number) => { //can update to set options to an empty array
+    let newMenu = this.state.menu;
+    newMenu.active = true;
+    newMenu.current = id;
+    this.setState({ menu: newMenu });
+  };
 
   componentDidMount() {
     this.fetchTemplate();
   }
 
-  handleCloseMenu(){
-    this.setState({menu: {active: false, current: -1}});
+  handleCloseMenu() {
+    this.setState({ menu: {active: false, current: -1, options: []}});
     console.log('set state close menu');
   }
 
+  handleSubmit(value: string, type: string, id: number) {
+    switch (type) {
+      case 'song':
+        if (isNaN(parseInt(value))) {
+          //handle error
+        } else {
+          fetchHymnTitle(parseInt(value).toString()).then(x => x.substr(3)).then(x => {
+            let newMenu = this.state.menu;
+            newMenu.options.push(x);
+            this.setState({
+              menu: newMenu
+            });
+          });
+        }
+    }
+  }
+
+  handleOptionClick() {
+    //get option name from state
+    //get current from state
+    //update title in programData (in state)
+    //add lyrics in state
+  }
+
+
   render() {
     let menu: JSX.Element = <div />;
-    if(this.state.menu.active){
-      switch(this.state.programData[this.state.menu.current].type){
-        case "song": menu = <Menu title="song menu" onClose={this.handleCloseMenu.bind(this)} />;
-        break;
-        case "cover": menu = <Menu title="cover menu" onClose={this.handleCloseMenu.bind(this)}  />
-        break;
-        case "reading": menu = <Menu title="reading menu" onClose={this.handleCloseMenu.bind(this)}  />
-        break;
-        default: throw new Error("Program State stored incorrectly.");
+    if (this.state.menu.active) {
+      let current = this.state.menu.current;
+      switch (this.state.programData[this.state.menu.current].type) {
+        case 'song':
+          menu = (
+            <Menu title="Add Song" onClose={this.handleCloseMenu.bind(this)}>
+              <Search
+                onSubmit={(x: string) => {
+                  this.handleSubmit(x, 'song', current);
+                }}
+                label="Search For a Song"
+              />
+              {this.state.menu.options.map((item, index) => (
+                <FullButton label={item} key={index} onClick={this.handleOptionClick.bind(this)} />
+              ))}
+            </Menu>
+          );
+          break;
+        case 'reading':
+          menu = (
+            <Menu title="Add Reading" onClose={this.handleCloseMenu.bind(this)}>
+              <Search
+                onSubmit={(x: string) => {
+                  this.handleSubmit(x, 'reading', current);
+                }}
+                label="Search For a Passage"
+              />
+            </Menu>
+          );
+          break;
+        case 'cover':
+          menu = <Menu title="cover menu" onClose={this.handleCloseMenu.bind(this)} />;
+          break;
+        default:
+          throw new Error('Program State stored incorrectly.');
       }
     }
 
@@ -220,7 +317,14 @@ class Program extends Component<ProgramProps, ProgramState> {
         <Page title="Create Program" back={true}>
           <div className="program">
             <ul>
-              {this.state.programData.map((item, index) => <ProgramItem key={index} item={item} onClick={this.handleAddClick.bind(this)} id={index}/>)}
+              {this.state.programData.map((item, index) => (
+                <ProgramItem
+                  key={index}
+                  item={item}
+                  onClick={this.handleAddClick.bind(this)}
+                  id={index}
+                />
+              ))}
             </ul>
           </div>
         </Page>

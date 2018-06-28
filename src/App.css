@@ -67,8 +67,8 @@ a, a:link, a:hover, a:active, a:visited {
 }
 
 .full-button{
-  margin-left: 5vw;
-  margin-right: 5vw;
+  /* margin-left: 5vw;
+  margin-right: 5vw; */
   margin-top: 10px;
   margin-bottom: 10px;  
   -webkit-transition: 0.3s;
@@ -110,5 +110,26 @@ a, a:link, a:hover, a:active, a:visited {
   z-index: 2;
   /* background-color: rgba(255, 255, 255, 0.95); */
   background-color: #fff;
-  box-shadow: 0 5px 10px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
+  -webkit-box-shadow: 0 5px 10px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
+          box-shadow: 0 5px 10px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);
+}
+
+.menu .icon {
+  top: 5vh;
+  position: absolute;
+  padding-right: 0;
+}
+
+.search form input{
+  width: 100%;
+  font-size: 5vh;
+  font-family: 'Heebo';
+  font-weight: 900;
+  border: 0px;
+  background-color: #eee;
+  background-color: #eee;
+  padding-left: 15px;
+  padding-right: 15px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; 
 }
