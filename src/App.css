@@ -120,7 +120,7 @@ a, a:link, a:hover, a:active, a:visited {
   padding-right: 0;
 }
 
-.search form input{
+.search input{
   width: 100%;
   font-size: 5vh;
   font-family: 'Heebo';

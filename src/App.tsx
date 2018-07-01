@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Router, Route, Switch, RouteComponentProps, Redirect } from 'react-router';
-import { NavLink } from 'react-router-dom';
 import './App.css';
 import { createHashHistory } from 'history';
 import { fetchHymn, fetchHymnTitle } from './hymn-fetch';
+import { PlusIcon, EditIcon } from './components/icons';
+import { Home, Create } from './components/pages';
+import { Menu, Search, FullButton, Page, Form } from './components/building-blocks';
 
 const history = createHashHistory();
 
@@ -11,167 +13,6 @@ class Slide extends React.Component {
   render() {
     return <div className="slide" />;
   }
-}
-
-interface FullButtonProps {
-  label: string;
-  onClick?: any;
-  children?: any;
-}
-function FullButton(props: FullButtonProps) {
-  return (
-    <div className="box full-button" onClick={props.onClick}>
-      {props.children}
-      <h1>{props.label}</h1>
-    </div>
-  );
-}
-
-function PlusIcon(props: { onClick?: any }) {
-  return (
-    <svg className="icon" x="0px" y="0px" viewBox="0 0 100 100" onClick={props.onClick}>
-      <rect x="0" y="0" width="100" height="100" />
-      <rect x="5" y="5" width="90" height="90" fill="#fff" />
-      <rect x="45" y="10" width="10" height="80" />
-      <rect x="10" y="45" width="80" height="10" />
-    </svg>
-  );
-}
-
-function BackIcon(props: { onClick?: any }) {
-  return (
-    <svg className="icon" width="100" height="100" viewBox="0 0 100 100" onClick={props.onClick}>
-      <rect x="0" y="0" width="100" height="100" />
-      <rect x="5" y="5" width="90" height="90" fill="#fff" />
-      <polygon points="10,50 50,10 57,17 23,50 57,83 50,90" />
-      <rect x="15" y="45" height="10" width="75" />
-    </svg>
-  );
-}
-
-function CloseIcon(props: { onClick?: any }) {
-  return (
-    <svg className="icon" width="100" height="100" viewBox="0 0 100 100" onClick={props.onClick}>
-      <rect x="0" y="0" width="100" height="100" />
-      <rect x="5" y="5" width="90" height="90" fill="#fff" />
-      <polygon points="10,15 15,10 90,85 85,90" />
-      <polygon points="90,15 85,10 10,85 15,90" />
-    </svg>
-  );
-}
-
-function Container(props: { children?: any; className?: string }) {
-  return <div className={props.className + ' container'}>{props.children}</div>;
-}
-
-interface PageProps {
-  title: string;
-  children?: any;
-  back?: boolean;
-  className?: string;
-}
-interface PageState {}
-
-class Page extends React.Component<PageProps, PageState> {
-  render() {
-    let backButton: any = null;
-    if (this.props.back) {
-      backButton = (
-        <a className="back" onClick={() => history.goBack()}>
-          <BackIcon />
-        </a>
-      );
-    }
-    return (
-      <div>
-        {backButton}
-        <Container className={this.props.className + ' animated fadeInUp page'}>
-          <h1 className="title center">{this.props.title}</h1>
-          {this.props.children}
-        </Container>
-      </div>
-    );
-  }
-}
-
-interface MenuProps {
-  title: string;
-  onClose: Function;
-}
-interface MenuState {}
-class Menu extends Component<MenuProps, MenuState> {
-  render() {
-    return (
-      <div className="menu animated slideInUp">
-        <CloseIcon onClick={this.props.onClose} />
-        <Page title={this.props.title}>{this.props.children}</Page>
-      </div>
-    );
-  }
-}
-
-interface SearchProps {
-  onSubmit: any;
-  label: string;
-}
-interface SearchState {
-  value: string;
-}
-class Search extends Component<SearchProps, SearchState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { value: '' };
-
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event: any) {
-    this.setState({ value: event.target.value });
-  }
-
-  handleSubmit(event: any) {
-    this.props.onSubmit(this.state.value);
-    event.preventDefault();
-  }
-  render() {
-    return (
-      <div className="search">
-        <form onSubmit={this.handleSubmit}>
-          <input
-            type="text"
-            value={this.state.value}
-            onChange={this.handleChange}
-            placeholder={this.props.label}
-          />
-        </form>
-      </div>
-    );
-  }
-}
-
-function Home(props: any) {
-  //ugh will probably have to convert to class to pull past pres. from storage
-  return (
-    <Page title="DivinePres">
-      <NavLink activeClassName="active-link" to="/create">
-        <FullButton label="Create New Presentation">
-          <PlusIcon />
-        </FullButton>
-      </NavLink>
-    </Page>
-  );
-}
-
-function Create(props: any) {
-  return (
-    <Page title="Pick a template" back={true}>
-      <NavLink to="/create/TMBC">
-        <FullButton label="TMBC" />
-      </NavLink>
-      <FullButton label="Blank" />
-    </Page>
-  );
 }
 
 interface ProgramItemProps {
@@ -214,11 +55,17 @@ interface ProgramState {
 class Program extends Component<ProgramProps, ProgramState> {
   constructor(props: ProgramProps) {
     super(props);
+    // this.handleOptionClick = this.handleOptionClick.bind(this);
     this.state = {
       menu: { active: false, current: -1, options: [] },
       programData: []
     };
   }
+
+  componentDidMount() {
+    this.fetchTemplate();
+  }
+
   async fetchTemplate() {
     const response = await fetch(this.props.template);
     let json = await response.json();
@@ -230,86 +77,117 @@ class Program extends Component<ProgramProps, ProgramState> {
     }
   }
 
-  handleAddClick = (id: number) => { //can update to set options to an empty array
+  handleAddClick = (id: number) => {
+    //can update to set options to an empty array
     let newMenu = this.state.menu;
     newMenu.active = true;
     newMenu.current = id;
     this.setState({ menu: newMenu });
   };
 
-  componentDidMount() {
-    this.fetchTemplate();
-  }
-
-  handleCloseMenu() {
-    this.setState({ menu: {active: false, current: -1, options: []}});
+  handleCloseMenu = () => {
+    this.setState({ menu: { active: false, current: -1, options: [] } });
     console.log('set state close menu');
-  }
+  };
 
-  handleSubmit(value: string, type: string, id: number) {
+  handleSubmit = (value: string, id: number) => {
+    let newMenu = this.state.menu;
+    let type = this.state.programData[id].type;
+    newMenu.options = [];
+    this.setState({
+      menu: newMenu
+    });
     switch (type) {
       case 'song':
         if (isNaN(parseInt(value))) {
           //handle error
         } else {
-          fetchHymnTitle(parseInt(value).toString()).then(x => x.substr(3)).then(x => {
-            let newMenu = this.state.menu;
-            newMenu.options.push(x);
-            this.setState({
-              menu: newMenu
+          fetchHymnTitle(parseInt(value).toString())
+            .then(x => x.substr(parseInt(value).toString().length + 2))
+            .then(x => {
+              let newMenu = this.state.menu;
+              newMenu.options.push(x);
+              this.setState({
+                menu: newMenu
+              });
+              console.log(this.state);
             });
-          });
         }
+        break;
+      case 'reading':
+        break;
+      case 'cover':
+        break;
+      default:
+    }
+  };
+
+  handleOptionClick = (id: number) => {
+    //this function is not universal for all types
+    //get option name from state -d
+    //get current from state -d
+    //update title in programData (in state) -d
+    //add lyrics in state TO DO
+    let option = this.state.menu.options[id];
+    let current = this.state.menu.current;
+    let newProgramData = this.state.programData;
+    newProgramData[current].title += option;
+    // let lyrics= '';
+    // fetchHymn(parseInt(value).toString()).then(x => {lyrics = x});
+    this.setState({
+      programData: newProgramData
+    });
+    this.handleCloseMenu();
+  };
+
+  renderMenu() {
+
+
+    if (!this.state.menu.active) return <div />;
+    const current = this.state.menu.current;
+    const type = this.state.programData[this.state.menu.current].type;
+    if (type == 'song') {
+      return (
+        <Menu title="Add Song" onClose={this.handleCloseMenu}>
+          <Search
+            onSubmit={(x: string) => {
+              this.handleSubmit(x, current);
+            }}
+            label="Search For a Song #"
+          />
+          {this.state.menu.options.map((item, index) => (
+            <FullButton
+              label={item}
+              key={index}
+              onClick={() => {
+                this.handleOptionClick(index);
+              }}
+            />
+          ))}
+        </Menu>
+      );
+      if (type == 'reading') {
+        return (
+          <Menu title="Add Reading" onClose={this.handleCloseMenu}>
+            {/* <Search
+             onSubmit={(x: string) => {
+               this.handleSubmit(x, 'reading', current);
+             }}
+             label="Search For a Passage"
+           /> */}
+            <Form inputs={2} labels={['label 1', 'label 2', 'label 3']} />
+          </Menu>
+        );
+      }
+      if (type == 'cover') {
+        return <Menu title="cover menu" onClose={this.handleCloseMenu.bind(this)} />;
+      }
+      return <div />;
     }
   }
-
-  handleOptionClick() {
-    //get option name from state
-    //get current from state
-    //update title in programData (in state)
-    //add lyrics in state
-  }
-
 
   render() {
-    let menu: JSX.Element = <div />;
-    if (this.state.menu.active) {
-      let current = this.state.menu.current;
-      switch (this.state.programData[this.state.menu.current].type) {
-        case 'song':
-          menu = (
-            <Menu title="Add Song" onClose={this.handleCloseMenu.bind(this)}>
-              <Search
-                onSubmit={(x: string) => {
-                  this.handleSubmit(x, 'song', current);
-                }}
-                label="Search For a Song"
-              />
-              {this.state.menu.options.map((item, index) => (
-                <FullButton label={item} key={index} onClick={this.handleOptionClick.bind(this)} />
-              ))}
-            </Menu>
-          );
-          break;
-        case 'reading':
-          menu = (
-            <Menu title="Add Reading" onClose={this.handleCloseMenu.bind(this)}>
-              <Search
-                onSubmit={(x: string) => {
-                  this.handleSubmit(x, 'reading', current);
-                }}
-                label="Search For a Passage"
-              />
-            </Menu>
-          );
-          break;
-        case 'cover':
-          menu = <Menu title="cover menu" onClose={this.handleCloseMenu.bind(this)} />;
-          break;
-        default:
-          throw new Error('Program State stored incorrectly.');
-      }
-    }
+    let menu = this.renderMenu();
 
     return (
       <div>
