@@ -120,16 +120,28 @@ a, a:link, a:hover, a:active, a:visited {
   padding-right: 0;
 }
 
-.search input{
+.input{
   width: 100%;
   font-size: 5vh;
   font-family: 'Heebo';
   font-weight: 900;
   border: 0px;
   background-color: #eee;
-  background-color: #eee;
   padding-left: 15px;
   padding-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   -webkit-box-sizing: border-box;
           box-sizing: border-box; 
+}
+
+.submit {
+  margin-left: 40%;
+  margin-right: 40%;
+  width:20%;
+  font-size: 5vh;
+  font-family: 'Heebo';
+  font-weight: 900;
+  border: 0px;
+  background-color: #eee;
 }
