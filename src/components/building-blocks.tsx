@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { BackIcon, CloseIcon } from './icons';
+import { createSelector } from 'reselect';
 
 export function Container(props: { children?: any; className?: string }) {
   return <div className={props.className + ' container'}>{props.children}</div>;
@@ -217,19 +218,43 @@ export class Menu extends React.Component<MenuProps, MenuState> {
 
 //##########################################
 
+const inputsSelector = (props: FormProps) => props.inputs;
+
 interface FormProps {
+  type: string;
   inputs: number;
   labels: Array<string>;
   onSubmit?: any;
+  values: Array<any>;
 }
 interface FormState {
   values: Array<any>;
 }
+
+/**
+ * Returns form with specified elements
+ * @returns values on submit
+ * @example
+ * type="text"
+ * inputs={1}
+ * labels={["search"]}
+ * values={[]}
+ * @example
+ * type="textarea"
+ * inputs={2}
+ * labels={["essay", "paragraph"]}
+ * values={[]}
+ * @example
+ * type="dropdown"
+ * inputs={1}
+ * labels={[]}
+ * values={["1", "2", "3"]}
+ */
 export class Form extends React.Component<FormProps, FormState> {
   constructor(props: FormProps) {
     super(props);
     this.state = {
-      values: []
+      values: this.props.values
     };
   }
 
@@ -237,39 +262,81 @@ export class Form extends React.Component<FormProps, FormState> {
     if (this.props.hasOwnProperty('onSubmit')) {
       this.props.onSubmit(this.state.values);
     }
-    
     event.preventDefault();
   };
 
-  handleChange(event: any, id: number) {
+  handleChange(event: any, id: number, callback: any = () => {}) {
     let newValues = [...this.state.values];
-    newValues[id] = event.target.value;
-    this.setState({
-      values: newValues
-    });
+    if (id !== -1) {
+      newValues[id] = event.target.value;
+    } else {
+      newValues = [event.target.value];
+      console.log('new values ' + newValues);
+    }
+    this.setState(
+      previousState => ({
+        ...previousState,
+        values: newValues
+      }),
+      () => {
+        callback();
+      }
+    );
+    // console.log("JFSDKLFJDSKL " + newValues);
   }
-
-  generateInputs() {
-    console.log('now i only render once!');
-    let inputs = [<div key={-1} />];
-    for (let i = 0; i < this.props.inputs; i++) {
-      inputs.push(
-        <input
-          className="input"
-          type="text"
-          placeholder={this.props.labels[i]}
-          defaultValue={this.state.values[i]}
-          onChange={e => this.handleChange(e, i)}
-        />
+  generateDropdown() {
+    let options: Array<JSX.Element> = [];
+    for (let i = 0; i < this.props.values.length; i++) {
+      options.push(
+        <option key={i} value={this.props.values[i]}>
+          {this.props.values[i]}
+        </option>
       );
     }
-    if (this.props.inputs > 1) {
-      inputs.push(<input className='submit' type="submit" value="go" />);
-    }
-    return inputs;
+    return options;
   }
 
+  generateInputs = createSelector([inputsSelector], inputsFromProps => {
+    let inputs = [<div key={-2} />];
+    if (this.props.type == 'text') {
+      for (let i = 0; i < inputsFromProps; i++) {
+        inputs.push(
+          <input
+            key={i}
+            className="input"
+            type="text"
+            placeholder={this.props.labels[i]}
+            defaultValue={this.state.values[i]}
+            onChange={e => this.handleChange(e, i)}
+          />
+        );
+      }
+    } else if (this.props.type == 'textarea') {
+      for (let i = 0; i < inputsFromProps; i++) {
+        inputs.push(
+          <textarea key={-1} value={this.state.values[i]} onChange={e => this.handleChange(e, i)} />
+        );
+      }
+    } else if (this.props.type == 'dropdown') {
+      inputs.push(
+        <select
+          key={0}
+          onChange={e => {
+            this.handleChange(e, -1);
+            console.log('hhh ' + e.target.value);
+          }}
+        >
+          {this.generateDropdown()}
+        </select>
+      );
+    }
+    if (inputsFromProps > 1 || this.props.type == 'dropdown') {
+      inputs.push(<input key={-1} className="submit" type="submit" value="go" />);
+    }
+    return inputs;
+  });
+
   render() {
-    return <form onSubmit={this.handleSubmit}>{this.generateInputs()}</form>;
+    return <form onSubmit={this.handleSubmit}>{this.generateInputs(this.props)}</form>;
   }
 }

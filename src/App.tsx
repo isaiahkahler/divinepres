@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Router, Route, Switch, RouteComponentProps, Redirect } from 'react-router';
 import './App.css';
 import { createHashHistory } from 'history';
-import { fetchHymn, fetchHymnTitle } from './hymn-fetch';
+import { fetchHymn, fetchHymnTitle } from './components/hymn-fetch';
 import { PlusIcon, EditIcon } from './components/icons';
 import { Home, Create } from './components/pages';
 import { FullButton, Page, SongMenu } from './components/building-blocks';
@@ -238,17 +238,17 @@ class App extends React.Component<AppProps, AppState> {
   public render() {
     //TEMP #######################################################
     const template = [
-      { id: 0, type: 'cover', title: 'Welcome and Announcements' },
-      { id: 1, type: 'song', title: 'Hymn - ', songtitle: '' },
-      { id: 2, type: 'reading', title: 'Scripture - ' },
-      { id: 3, type: 'plain', title: 'Pastoral Prayer' },
-      { id: 4, type: 'song', title: 'Hymn - ', songtitle: '' },
-      { id: 5, type: 'plain', title: 'Offertory Prayer' },
-      { id: 6, type: 'plain', title: 'Offerings Received' },
-      { id: 7, type: 'song', title: 'Hymn - ', songtitle: '' },
-      { id: 8, type: 'reading', title: 'Message - ' },
-      { id: 9, type: 'song', title: 'Hymn - ', songtitle: '' },
-      { id: 10, type: 'plain', title: 'Benediction' }
+      {type: 'cover', title: 'Welcome and Announcements' },
+      {type: 'song', title: 'Hymn - ', songtitle: '' },
+      {type: 'reading', title: 'Scripture - ' },
+      {type: 'plain', title: 'Pastoral Prayer' },
+      {type: 'song', title: 'Hymn - ', songtitle: '' },
+      {type: 'plain', title: 'Offertory Prayer' },
+      {type: 'plain', title: 'Offerings Received' },
+      {type: 'song', title: 'Hymn - ', songtitle: '' },
+      {type: 'reading', title: 'Message - ' },
+      {type: 'song', title: 'Hymn - ', songtitle: '' },
+      { type: 'plain', title: 'Benediction' }
     ];
 
     return (
