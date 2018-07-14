@@ -1,0 +1,45 @@
+h1 {
+  font-family: 'Heebo', sans-serif;
+  font-size: 5vh;
+  margin: 0;
+}
+
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Heebo', sans-serif;
+}
+
+a,
+a:link,
+a:hover,
+a:active,
+a:visited {
+  color: #000;
+  text-decoration: none;
+}
+.box h1 {
+  vertical-align: middle;
+  display: inline;
+}
+
+.center {
+  text-align: center;
+}
+
+.full-button .icon {
+  height: 5vh;
+  padding-right: 25px;
+  vertical-align: middle;
+}
+
+.full-button h1{
+    display: inline;
+    vertical-align: middle  
+}
+
+.full-button:hover {
+  background-color: #0080ff50;
+}

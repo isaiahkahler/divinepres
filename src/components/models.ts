@@ -9,20 +9,28 @@ export interface Program {
 export interface Section<T> {
   title: string;
   type: string;
+  icon: "add" | "edit";
   data: T;
 }
 
-export interface Plain {}
+export interface Plain extends Section<Plain> {}
 
-export interface Song {
-    number: string;
-    title: string;
+export interface Song extends Section<Song> {
+    songnumber: string;
+    songtitle: string;
     lyrics: string;
     backgroundUrl: string | undefined;
 }
 
-// export interface Reading {
-//     title: string;
-//     passage: 
-// }
+export interface Reading extends Section<Reading> {
+    readingtitle: string;
+    content: any;
+    page: string;
+}
+
+export interface Cover extends Section<Cover>{
+  backgroundURL: string | undefined;
+  covertitle: string;
+  subtitle?: string;
+}
 
