@@ -1,11 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { PlusIcon } from 'src/components/icons';
+import { PlusIcon, EditIcon } from 'src/components/icons';
 import {Section, Song, Reading, Plain, Cover} from 'src/components/models';
-
-const Event = styled.li`
-  /* display: inline; */
-`;
 
 const InlineH1 = styled.h1`
     display: inline;
@@ -17,40 +13,44 @@ interface ProgramEventProps {
 }
 
 export class ProgramEvent extends React.Component<ProgramEventProps, {}> {
-    getIcon() {
-        
-    }
 
   render() {
     if (this.props.item.type === "song"){
       return (
-        <Event>
+        <li>
           <InlineH1>{this.props.item.title}{this.props.item.songtitle}</InlineH1>
-          <PlusIcon onClick={this.props.onClick} />
-        </Event>
+          {this.props.item.icon || <PlusIcon onClick={this.props.onClick} />}
+          {this.props.item.icon === "add" && <PlusIcon onClick={this.props.onClick} />}
+          {this.props.item.icon === "edit" && <EditIcon onClick={this.props.onClick} />}
+          
+        </li>
       );
     }
     if (this.props.item.type === 'reading') {
       return (
-        <Event>
+        <li>
           <InlineH1>{this.props.item.title}{this.props.item.readingtitle}</InlineH1>
-          <PlusIcon onClick={this.props.onClick} />
-        </Event>
+          {this.props.item.icon || <PlusIcon onClick={this.props.onClick} />}
+          {this.props.item.icon === "add" && <PlusIcon onClick={this.props.onClick} />}
+          {this.props.item.icon === "edit" && <EditIcon onClick={this.props.onClick} />}
+        </li>
       );
     }
     if (this.props.item.type === 'cover') {
       return (
-        <Event>
+        <li>
           <InlineH1>{this.props.item.title}</InlineH1>
-          <PlusIcon onClick={this.props.onClick} />
-        </Event>
+          {this.props.item.icon || <PlusIcon onClick={this.props.onClick} />}
+          {this.props.item.icon === "add" && <PlusIcon onClick={this.props.onClick} />}
+          {this.props.item.icon === "edit" && <EditIcon onClick={this.props.onClick} />}
+        </li>
       );
     }
     if (this.props.item.type === 'plain') {
       return (
-        <Event>
+        <li>
           <InlineH1>{this.props.item.title}</InlineH1>
-        </Event>
+        </li>
       );
     }
     

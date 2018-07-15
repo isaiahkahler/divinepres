@@ -1,14 +1,14 @@
 /**
  * a program is the data for an entire presentation
  */
-export interface Program {
-  title: string;
-  sections: Section<any>[];
-}
+// export interface Program {
+//   title: string;
+//   sections: Section<any>[];
+// }
 
 export interface Section<T> {
   title: string;
-  icon: "add" | "edit";
+  icon: "add" | "edit" | "none";
   data: T;
 }
 
@@ -36,5 +36,18 @@ export interface Cover extends Section<Cover>{
   backgroundURL: string | undefined;
   covertitle: string;
   subtitle?: string;
+}
+
+//menu
+/**
+ * type - one of selected element types
+ * value - the data or default value of the option
+ * display - the user given label
+ * special case: section label value = label
+ */
+export interface Option {
+  type: "section label" | "input" | "textarea" | "dropdown";
+  value: any;
+  display: any;
 }
 

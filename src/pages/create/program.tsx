@@ -25,8 +25,9 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     };
   }
 
-  handleProgramEventClick = (event: number) => {
+  handleProgramEventClick = (event: any) => {
     //bring up menu,,, or change to edit,,, orrrrrrrrrrr??
+    console.log(event);
   }
 
   generateProgramEvents() {
