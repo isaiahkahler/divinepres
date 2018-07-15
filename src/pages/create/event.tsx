@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { PlusIcon } from 'src/components/icons';
-import {Song, Reading, Plain, Cover} from 'src/components/models';
+import {Section, Song, Reading, Plain, Cover} from 'src/components/models';
 
 const Event = styled.li`
   /* display: inline; */
@@ -22,10 +22,10 @@ export class ProgramEvent extends React.Component<ProgramEventProps, {}> {
     }
 
   render() {
-    if (this.props.item.data === Song) {
+    if (this.props.item.type === "song"){
       return (
         <Event>
-          <InlineH1>{this.props.item.title + this.props.item.songtitle}</InlineH1>
+          <InlineH1>{this.props.item.title}{this.props.item.songtitle}</InlineH1>
           <PlusIcon onClick={this.props.onClick} />
         </Event>
       );
@@ -33,7 +33,7 @@ export class ProgramEvent extends React.Component<ProgramEventProps, {}> {
     if (this.props.item.type === 'reading') {
       return (
         <Event>
-          <InlineH1>{this.props.item.title + this.props.item.readingtitle}</InlineH1>
+          <InlineH1>{this.props.item.title}{this.props.item.readingtitle}</InlineH1>
           <PlusIcon onClick={this.props.onClick} />
         </Event>
       );
