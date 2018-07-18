@@ -35,15 +35,11 @@ export class Menu extends React.Component<MenuProps, MenuState> {
   }
 
   mapOptions() {
-    // if (this.state.didMap) {
-    //   return;
-    // }
     let newOptions: Array<Option> = [];
 
     if (this.props.event.type === 'song') {
       for (let item of Object.keys(this.props.event)) {
         if (item === 'type') {
-          console.log("dropdown")
           newOptions.push({
             type: SongMap[item].type,
             display: SongMap[item].display,
@@ -63,7 +59,6 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     if (this.props.event.type === 'reading') {
       for (let item of Object.keys(this.props.event)) {
         if (item === 'type') {
-          console.log("dropdown")
           newOptions.push({
             type: ReadingMap[item].type,
             display: ReadingMap[item].display,
@@ -83,7 +78,6 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     if (this.props.event.type === 'cover') {
       for (let item of Object.keys(this.props.event)) {
         if (item === 'type') {
-          console.log("dropdown")
           newOptions.push({
             type: CoverMap[item].type,
             display: CoverMap[item].display,
@@ -102,7 +96,6 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     if (this.props.event.type === 'plain') {
       for (let item of Object.keys(this.props.event)) {
         if (item === 'type') {
-          console.log("dropdown")
           newOptions.push({
             type: PlainMap[item].type,
             display: PlainMap[item].display,
