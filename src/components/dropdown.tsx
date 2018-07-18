@@ -2,7 +2,7 @@ import React, { FormEvent } from 'react';
 import styled from 'styled-components';
 import { Form } from 'src/components/form';
 
-const StyledInput = styled.input`
+const StyledSelect = styled.select`
   width: 100%;
   font-size: 3vh;
   font-family: 'Heebo';
@@ -15,42 +15,67 @@ const StyledInput = styled.input`
   box-sizing: border-box;
 `;
 
-interface InputProps {
-  placeholder?: string;
-  defaultValue?: string;
+const StyledOption = styled.option`
+  width: 100%;
+  font-size: 3vh;
+  font-family: 'Heebo';
+  border: 0px;
+  background-color: #eee;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  &:hover {
+    background-color: #0080ff50;
+  }
+`;
+
+interface DropdownProps {
+  value: string;
+  options: Array<string> | undefined;
   onSubmit?: any;
   submitOnChange?: boolean;
 }
-interface InputState {
+interface DropdownState {
   value: string;
 }
-export class Input extends React.Component<InputProps, InputState> {
+export class Dropdown extends React.Component<DropdownProps, DropdownState> {
   constructor(props: any) {
     super(props);
-    let startingValue = this.props.defaultValue || '';
-    this.state = { value: startingValue };
+    this.state = { value: this.props.value };
   }
 
   handleSubmit() {
     this.props.onSubmit && this.props.onSubmit(this.state.value);
   }
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     this.setState({ value: event.currentTarget.value });
   };
 
-  componentDidUpdate(previousProps: InputProps, previousState: InputState) {
+  componentDidUpdate(previousProps: DropdownProps, previousState: DropdownState) {
     this.props.submitOnChange && this.props.onSubmit(this.state.value);
+  }
+
+  mapOptions() {
+    if(!!this.props.options){
+      return this.props.options.map((item, index) => (
+        <StyledOption key={index} value={item}>
+          {item}
+        </StyledOption>
+      ))
+    } else {
+      return undefined;
+    }
   }
 
   render() {
     return (
       <Form onSubmit={this.props.onSubmit}>
-        <StyledInput
-          onChange={this.handleChange}
-          defaultValue={this.state.value}
-          placeholder={this.props.placeholder || ''}
-        />
+        <StyledSelect onChange={this.handleChange} defaultValue={this.state.value}>
+          {this.mapOptions()}
+        </StyledSelect>
       </Form>
     );
   }

@@ -12,6 +12,9 @@ const Button = styled.div`
   -ms-user-select: none;
   user-select: none;
   padding: 1.25rem;
+  &:hover{
+  background-color: #0080ff50;
+  }
 `;
 
 interface FullButtonProps {

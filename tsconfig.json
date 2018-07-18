@@ -11,11 +11,11 @@
     "moduleResolution": "node",
     "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
     // "noImplicitReturns": true,
     // "noImplicitThis": true,
     // "noImplicitAny": true,
-    "strict": true
+    // "strict": true //oof
     // "suppressImplicitAnyIndexErrors": true,
     // "noUnusedLocals": true
   },
