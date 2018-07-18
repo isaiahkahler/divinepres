@@ -46,7 +46,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
     this.state = { value: this.props.value };
   }
 
-  handleSubmit() {
+  handleSubmit = () => {
     this.props.onSubmit && this.props.onSubmit(this.state.value);
   }
 
@@ -55,7 +55,7 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
   };
 
   componentDidUpdate(previousProps: DropdownProps, previousState: DropdownState) {
-    this.props.submitOnChange && this.props.onSubmit(this.state.value);
+    this.props.submitOnChange && this.handleSubmit();
   }
 
   mapOptions() {

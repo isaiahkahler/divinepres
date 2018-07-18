@@ -15,11 +15,13 @@ import { Input } from 'src/components/input';
 import { TextArea } from 'src/components/textarea';
 import { Dropdown } from 'src/components/dropdown';
 import { HTMLPreview } from 'src/components/htmlpreview';
+import {Search} from 'src/components/search';
 
 interface MenuProps {
   title: string;
   event: Song | Plain | Reading | Cover;
   onClose: any;
+  submitHandler: any;
 }
 interface MenuState {
   options: Array<Option>;
@@ -44,13 +46,15 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             type: SongMap[item].type,
             display: SongMap[item].display,
             value: this.props.event[item],
-            options: SongMap[item].options
+            options: SongMap[item].options,
+            dataname: item
           });
         } else {
           newOptions.push({
             type: SongMap[item].type,
             display: SongMap[item].display,
-            value: this.props.event[item]
+            value: this.props.event[item],
+            dataname: item
           });
         }
       }
@@ -63,13 +67,15 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             type: ReadingMap[item].type,
             display: ReadingMap[item].display,
             value: this.props.event[item],
-            options: ReadingMap[item].options
+            options: ReadingMap[item].options,
+            dataname: item
           });
         } else {
           newOptions.push({
             type: ReadingMap[item].type,
             display: ReadingMap[item].display,
-            value: this.props.event[item]
+            value: this.props.event[item],
+            dataname: item
           });
         }
       }
@@ -82,13 +88,15 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             type: CoverMap[item].type,
             display: CoverMap[item].display,
             value: this.props.event[item],
-            options: CoverMap[item].options
+            options: CoverMap[item].options,
+            dataname: item
           });
         } else {
           newOptions.push({
             type: CoverMap[item].type,
             display: CoverMap[item].display,
-            value: this.props.event[item]
+            value: this.props.event[item],
+            dataname: item
           });
         }
       }
@@ -100,13 +108,15 @@ export class Menu extends React.Component<MenuProps, MenuState> {
             type: PlainMap[item].type,
             display: PlainMap[item].display,
             value: this.props.event[item],
-            options: PlainMap[item].options
+            options: PlainMap[item].options,
+            dataname: item
           });
         } else {
           newOptions.push({
             type: PlainMap[item].type,
             display: PlainMap[item].display,
-            value: this.props.event[item]
+            value: this.props.event[item],
+            dataname: item
           });
         }
       }
@@ -117,16 +127,12 @@ export class Menu extends React.Component<MenuProps, MenuState> {
 
   generateOptions(): Array<JSX.Element> {
     let mappedOptions = this.state.options.map((item, index) => {
-      if (item.type === 'section label') {
-        //this might not be a thing
-        return <h2 key={index}>{item.value}</h2>;
-      }
       if (item.type === 'input') {
         //finish on submit!!!!!!
         return (
           <React.Fragment key={index}>
             <h3>{item.display}</h3>
-            <Input defaultValue={item.value} placeholder={item.display} />
+            <Input defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} />
           </React.Fragment>
         );
       }
@@ -134,28 +140,33 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         return (
           <React.Fragment key={index}>
             <h3>{item.display}</h3>
-            <TextArea defaultValue={item.value} placeholder={item.display} />
+            <TextArea defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)}/>
           </React.Fragment>
         );
       }
       if (item.type === 'dropdown') {
-        console.log("fdsafdkajfksdla")
-        console.log(item)
         return (
           <React.Fragment key={index}>
             <h3>{item.display}</h3>
-            <Dropdown options={item.options} value={item.value} />
+            <Dropdown options={item.options} value={item.value} submitOnChange={true} onSubmit={(value) => this.props.submitHandler(item.dataname, value)}/>
           </React.Fragment>
         );
       }
       if (item.type === 'htmlpreview') {
         return <HTMLPreview html={item.value} key={index} />;
       }
+      if(item.type === "search"){
+        return (
+          <React.Fragment key={index}>
+          <h3>{item.display}</h3>
+          <Search defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)}/>
+          </React.Fragment>
+        );
+      }
       if (item.type === 'none') {
         return undefined;
       }
     });
-    console.log(this.state.options);
     return mappedOptions;
   }
 

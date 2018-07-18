@@ -2,7 +2,7 @@ import React, { FormEvent } from 'react';
 import styled from 'styled-components';
 import { Form } from 'src/components/form';
 
-const StyledInput = styled.input`
+const StyledSearch = styled.input`
   width: 100%;
   font-size: 3vh;
   font-family: 'Heebo';
@@ -15,16 +15,16 @@ const StyledInput = styled.input`
   box-sizing: border-box;
 `;
 
-interface InputProps {
+interface SearchProps {
   placeholder?: string;
   defaultValue?: string;
   onSubmit?: any;
   submitOnChange?: boolean;
 }
-interface InputState {
+interface SearchState {
   value: string;
 }
-export class Input extends React.Component<InputProps, InputState> {
+export class Search extends React.Component<SearchProps, SearchState> {
   constructor(props: any) {
     super(props);
     let startingValue = this.props.defaultValue || '';
@@ -39,14 +39,14 @@ export class Input extends React.Component<InputProps, InputState> {
     this.setState({ value: event.currentTarget.value });
   };
 
-  componentDidUpdate(previousProps: InputProps, previousState: InputState) {
+  componentDidUpdate(previousProps: SearchProps, previousState: SearchState) {
     this.props.submitOnChange && this.props.onSubmit(this.state.value);
   }
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <StyledInput
+      <Form onSubmit={this.handleSubmit} submitButton={true} submitButtonValue="search">
+        <StyledSearch
           onChange={this.handleChange}
           defaultValue={this.state.value}
           placeholder={this.props.placeholder || ''}

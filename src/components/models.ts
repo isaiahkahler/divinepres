@@ -45,10 +45,11 @@ export interface Cover extends Section<Cover> {
  * special case: section label value = label
  */
 export interface Option {
-  type: 'section label' | 'input' | 'textarea' | 'dropdown' | 'htmlpreview' | 'none';
+  type: 'section label' | 'input' | 'textarea' | 'dropdown' | 'htmlpreview' | 'none' | 'search';
   value: any; // string | HTML
   display: string;
   options?: Array<string>;
+  dataname: string;
 }
 
 ///UHHHhHhHhbH idk if ill use section label yet
@@ -62,18 +63,24 @@ export const SongMap: {
   lyrics: Option;
   backgroundURL: Option;
 } = {
-  title: { type: 'input', value: '', display: 'Event Title' },
-  icon: { type: 'none', value: '', display: '' },
+  title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
+  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
+    dataname: 'type',
     type: 'dropdown',
     value: '',
     display: 'Event Type',
     options: ['plain', 'song', 'reading', 'cover']
   },
-  songnumber: { type: 'input', value: '', display: 'Song Number' },
-  songtitle: { type: 'input', value: '', display: 'Song Title' },
-  lyrics: { type: 'textarea', value: '', display: 'Lyrics' },
-  backgroundURL: { type: 'none', value: '', display: '' }
+  songnumber: {
+    dataname: 'songnumber',
+    type: 'search',
+    value: '',
+    display: 'Search for a Song - Song Number'
+  },
+  songtitle: { dataname: 'songtitle', type: 'input', value: '', display: 'Song Title' },
+  lyrics: { dataname: 'lyrics', type: 'textarea', value: '', display: 'Lyrics' },
+  backgroundURL: { dataname: 'backgroundURL', type: 'none', value: '', display: '' }
 };
 
 export const ReadingMap: {
@@ -84,17 +91,23 @@ export const ReadingMap: {
   content: Option;
   page: Option;
 } = {
-  title: { type: 'input', value: '', display: 'Event Title' },
-  icon: { type: 'none', value: '', display: '' },
+  title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
+  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
+    dataname: 'type',
     type: 'dropdown',
     value: '',
     display: 'Event Type',
     options: ['plain', 'song', 'reading', 'cover']
   },
-  readingtitle: { type: 'input', value: '', display: 'Reading Title' },
-  content: { type: 'htmlpreview', value: '', display: 'Passage' },
-  page: { type: 'input', value: '', display: 'Page Number' }
+  readingtitle: {
+    dataname: 'readingtitle',
+    type: 'search',
+    value: '',
+    display: 'Search for a Passage - Reading Title'
+  },
+  content: { dataname: 'content', type: 'htmlpreview', value: '', display: 'Passage' },
+  page: { dataname: 'page', type: 'input', value: '', display: 'Page Number' }
 };
 
 export const CoverMap: {
@@ -105,23 +118,25 @@ export const CoverMap: {
   covertitle: Option;
   subtitle: Option;
 } = {
-  title: { type: 'input', value: '', display: 'Event Title' },
-  icon: { type: 'none', value: '', display: '' },
+  title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
+  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
+    dataname: 'type',
     type: 'dropdown',
     value: '',
     display: 'Event Type',
     options: ['plain', 'song', 'reading', 'cover']
   },
-  backgroundURL: { type: 'none', value: '', display: 'Background URL' },
-  covertitle: { type: 'input', value: '', display: 'Cover Title' },
-  subtitle: { type: 'input', value: '', display: 'Cover Subtitle' }
+  backgroundURL: { dataname: 'backgroundURL', type: 'none', value: '', display: 'Background URL' },
+  covertitle: { dataname: 'covertitle', type: 'input', value: '', display: 'Cover Title' },
+  subtitle: { dataname: 'subtitle', type: 'input', value: '', display: 'Cover Subtitle' }
 };
 
 export const PlainMap: { title: Option; icon: Option; type: Option } = {
-  title: { type: 'input', value: '', display: 'Event Title' },
-  icon: { type: 'none', value: '', display: '' },
+  title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
+  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
+    dataname: 'type',
     type: 'dropdown',
     value: '',
     display: 'Event Type',

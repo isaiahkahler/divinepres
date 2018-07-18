@@ -31,7 +31,7 @@ export class TextArea extends React.Component<TextAreaProps, TextAreaState>{
         this.state = {value: startingValue}
     }
 
-    handleSubmit () {
+    handleSubmit = () => {
         this.props.onSubmit && this.props.onSubmit(this.state.value);
     }
 
@@ -45,7 +45,7 @@ export class TextArea extends React.Component<TextAreaProps, TextAreaState>{
 
     render() {
         return(
-            <Form onSubmit={this.props.onSubmit}>
+            <Form onSubmit={this.handleSubmit} submitButton={true} submitButtonValue="update">
                 <StyledTextArea onChange={this.handleChange} defaultValue={this.state.value} placeholder={this.props.placeholder || ""}/>
             </Form>
         );
