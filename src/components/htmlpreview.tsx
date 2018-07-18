@@ -11,7 +11,7 @@ interface HTMLPreviewProps {
 export class HTMLPreview extends React.Component<HTMLPreviewProps, {}>{
     componentDidMount() {
         let i = document.createElement("iframe");
-        let iframeDoc = i.contentDocument || i.contentWindow.document;
+        let iframeDoc = i.contentDocument ;// || i.contentWindow.document;
         if(iframeDoc !== null){
             iframeDoc.open();
             iframeDoc.write("<html><body></body></html>");
@@ -25,6 +25,7 @@ export class HTMLPreview extends React.Component<HTMLPreviewProps, {}>{
     render() {
         return(
             <StyledPreview className="frame" />
+            // <div>pretend this is an HTML preview</div>
         );
     }
 }

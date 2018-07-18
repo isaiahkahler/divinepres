@@ -19,6 +19,7 @@ import { HTMLPreview } from 'src/components/htmlpreview';
 interface MenuProps {
   title: string;
   event: Song | Plain | Reading | Cover;
+  onClose: any;
 }
 interface MenuState {
   options: Array<Option>;
@@ -57,60 +58,67 @@ export class Menu extends React.Component<MenuProps, MenuState> {
           });
         }
       }
-      console.log(newOptions);
     }
 
-    console.log('this should only run once?');
+    if (this.props.event.type === 'reading') {
+      for (let item of Object.keys(this.props.event)) {
+        if (item === 'type') {
+          console.log("dropdown")
+          newOptions.push({
+            type: ReadingMap[item].type,
+            display: ReadingMap[item].display,
+            value: this.props.event[item],
+            options: ReadingMap[item].options
+          });
+        } else {
+          newOptions.push({
+            type: ReadingMap[item].type,
+            display: ReadingMap[item].display,
+            value: this.props.event[item]
+          });
+        }
+      }
+    }
 
-    // if (this.props.event.type == 'song') {
-    //   let index = 0;
-    //   for (let property in this.props.event) {
-    //     newOptions.push({
-    //       type: SongMap[index].type,
-    //       value: property,
-    //       display: SongMap[index].display
-    //     });
-    //     index++;
-    //   }
-    // }
-    // if (this.props.event.type == 'reading') {
-    //   let index = 0;
-    //   for (let property in this.props.event) {
-    //     newOptions.push({
-    //       type: ReadingMap[index].type,
-    //       value: property,
-    //       display: ReadingMap[index].display
-    //     });
-    //     index++;
-    //   }
-    // }
-    // if (this.props.event.type == 'cover') {
-    //   let index = 0;
-    //   for (let property in this.props.event) {
-    //     newOptions.push({
-    //       type: CoverMap[index].type,
-    //       value: property,
-    //       display: CoverMap[index].display
-    //     });
-    //     index++;
-    //   }
-    // }
-    // if (this.props.event.type == 'plain') {
-    //   let index = 0;
-    //   for (let property in this.props.event) {
-    //     newOptions.push({
-    //       type: PlainMap[index].type,
-    //       value: property,
-    //       display: PlainMap[index].display
-    //     });
-    //     index++;
-    //   }
-    // }
-    //how does this update??
-    // this.setState({
-    //   options: newOptions,
-    //   didMap: true
-    // });
+    if (this.props.event.type === 'cover') {
+      for (let item of Object.keys(this.props.event)) {
+        if (item === 'type') {
+          console.log("dropdown")
+          newOptions.push({
+            type: CoverMap[item].type,
+            display: CoverMap[item].display,
+            value: this.props.event[item],
+            options: CoverMap[item].options
+          });
+        } else {
+          newOptions.push({
+            type: CoverMap[item].type,
+            display: CoverMap[item].display,
+            value: this.props.event[item]
+          });
+        }
+      }
+    }
+    if (this.props.event.type === 'plain') {
+      for (let item of Object.keys(this.props.event)) {
+        if (item === 'type') {
+          console.log("dropdown")
+          newOptions.push({
+            type: PlainMap[item].type,
+            display: PlainMap[item].display,
+            value: this.props.event[item],
+            options: PlainMap[item].options
+          });
+        } else {
+          newOptions.push({
+            type: PlainMap[item].type,
+            display: PlainMap[item].display,
+            value: this.props.event[item]
+          });
+        }
+      }
+    }
+
     return newOptions;
   }
 
@@ -159,6 +167,6 @@ export class Menu extends React.Component<MenuProps, MenuState> {
   }
 
   render() {
-    return <Modal title={this.props.title}>{this.generateOptions()}</Modal>;
+    return <Modal title={this.props.title} onClose={this.props.onClose}>{this.generateOptions()}</Modal>;
   }
 }

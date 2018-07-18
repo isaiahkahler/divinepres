@@ -10,18 +10,17 @@ import { Song, Plain, Reading, Cover } from 'src/components/models';
 const history = createHashHistory();
 
 const template:Array<Song | Plain | Reading | Cover> = [
-  // {type: 'cover', title: 'Welcome and Announcements' },
-  // {type: 'song', title: 'Hymn - '},
-  // {type: 'reading', title: 'Scripture - ' },
-  // {type: 'plain', title: 'Pastoral Prayer' },
-  // {type: 'song', title: 'Hymn - '},
-  // {type: 'plain', title: 'Offertory Prayer' },
-  // {type: 'plain', title: 'Offerings Received' },
-  // {type: 'song', title: 'Hymn - '},
-  // {type: 'reading', title: 'Message - ' },
-  // {type: 'song', title: 'Hymn - '},
-  // { type: 'plain', title: 'Benediction' }
-  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""}
+  {title: "Welcome and Announcements", icon: "add", type: "cover", backgroundURL: "", covertitle: "", subtitle: ""},
+  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Scripture - ", icon: "add", type: "reading", readingtitle: "", content: null, page: ""},
+  {title: "Pastoral Prayer", icon: "none", type: "plain"},
+  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Offertory Prayer", icon: "none", type: "plain"},
+  {title: "Offerings Received", icon: "none", type: "plain"},
+  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Message - ", icon: "add", type: "reading", readingtitle: "", content: null, page: ""},
+  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Benediction", icon: "none", type: "plain"},
 ];
 
 

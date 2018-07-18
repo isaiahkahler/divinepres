@@ -26,10 +26,17 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     };
   }
 
+  handleCloseMenu = () => {
+    this.setState(previousState => (
+      {...previousState,
+      menu: {active: false, event: -1}
+    }
+    ));
+  }
+
   generateMenu() {
     if(this.state.menu.active){
-      //add onClose
-      return <Menu title={"modify " + this.state.program[this.state.menu.event].type} event={this.state.program[this.state.menu.event]}/>
+      return <Menu title={"modify " + this.state.program[this.state.menu.event].type} event={this.state.program[this.state.menu.event]} onClose={this.handleCloseMenu}/>
     }
     return <div />
   }
@@ -41,7 +48,6 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
         menu: {active: true, event: id}
       }
     ));
-    // console.log(this.state.program[id]);
   };
 
   generateProgramEvents() {

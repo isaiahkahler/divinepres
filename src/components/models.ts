@@ -76,41 +76,55 @@ export const SongMap: {
   backgroundURL: { type: 'none', value: '', display: '' }
 };
 
-export const ReadingMap: Array<Option> = [
-  { type: 'input', value: '', display: 'Event Title' },
-  { type: 'none', value: '', display: '' },
-  {
+export const ReadingMap: {
+  title: Option;
+  icon: Option;
+  type: Option;
+  readingtitle: Option;
+  content: Option;
+  page: Option;
+} = {
+  title: { type: 'input', value: '', display: 'Event Title' },
+  icon: { type: 'none', value: '', display: '' },
+  type: {
     type: 'dropdown',
     value: '',
     display: 'Event Type',
     options: ['plain', 'song', 'reading', 'cover']
   },
-  { type: 'input', value: '', display: 'Reading Title' },
-  { type: 'htmlpreview', value: '', display: 'Passage' },
-  { type: 'input', value: '', display: 'Page Number' }
-];
+  readingtitle: { type: 'input', value: '', display: 'Reading Title' },
+  content: { type: 'htmlpreview', value: '', display: 'Passage' },
+  page: { type: 'input', value: '', display: 'Page Number' }
+};
 
-export const CoverMap: Array<Option> = [
-  { type: 'input', value: '', display: 'Event Title' },
-  { type: 'none', value: '', display: '' },
-  {
+export const CoverMap: {
+  title: Option;
+  icon: Option;
+  type: Option;
+  backgroundURL: Option;
+  covertitle: Option;
+  subtitle: Option;
+} = {
+  title: { type: 'input', value: '', display: 'Event Title' },
+  icon: { type: 'none', value: '', display: '' },
+  type: {
     type: 'dropdown',
     value: '',
     display: 'Event Type',
     options: ['plain', 'song', 'reading', 'cover']
   },
-  { type: 'none', value: '', display: 'Background URL' },
-  { type: 'input', value: '', display: 'Cover Title' },
-  { type: 'input', value: '', display: 'Cover Subtitle' }
-];
+  backgroundURL: { type: 'none', value: '', display: 'Background URL' },
+  covertitle: { type: 'input', value: '', display: 'Cover Title' },
+  subtitle: { type: 'input', value: '', display: 'Cover Subtitle' }
+};
 
-export const PlainMap: Array<Option> = [
-  { type: 'input', value: '', display: 'Event Title' },
-  { type: 'none', value: '', display: '' },
-  {
+export const PlainMap: { title: Option; icon: Option; type: Option } = {
+  title: { type: 'input', value: '', display: 'Event Title' },
+  icon: { type: 'none', value: '', display: '' },
+  type: {
     type: 'dropdown',
     value: '',
     display: 'Event Type',
     options: ['plain', 'song', 'reading', 'cover']
   }
-];
+};
