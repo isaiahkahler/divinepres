@@ -20,6 +20,7 @@ interface InputProps {
   defaultValue?: string;
   onSubmit?: any;
   submitOnChange?: boolean;
+  update: boolean;
 }
 interface InputState {
   value: string;
@@ -41,6 +42,9 @@ export class Input extends React.Component<InputProps, InputState> {
 
   componentDidUpdate(previousProps: InputProps, previousState: InputState) {
     this.props.submitOnChange && this.props.onSubmit(this.state.value);
+    if(this.props.update){
+      this.handleSubmit();
+    }
   }
 
   render() {

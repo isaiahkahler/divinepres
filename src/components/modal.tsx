@@ -40,7 +40,7 @@ const FixedIcon = styled.span`
 export class Modal extends React.Component<{ children?: any; title?: string; onClose?: any }, {}> {
   render() {
     return (
-      <StyledModal>
+      <StyledModal className="animated slideInUp">
         <PaddedContent>
           <div>
             <ScrollableContent>

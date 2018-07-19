@@ -62,7 +62,11 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
   }
 
   handleMenuUpdate = (dataName, newValue) => {
+    // console.log("dataName " + dataName);
+    // console.log("newValue " + newValue);
     if (dataName === 'search') {
+      //call server to get lyrics, then update the program in state (should update DOM)
+      
     } else if (dataName === 'type') {
       console.log(dataName + " " + newValue);
       //todo: event needs to be DELETED and then one will REPLACE IT

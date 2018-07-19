@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import { Modal } from 'src/components/modal';
 import {
   Song,
@@ -17,6 +18,10 @@ import { Dropdown } from 'src/components/dropdown';
 import { HTMLPreview } from 'src/components/htmlpreview';
 import {Search} from 'src/components/search';
 
+const Label = styled.h2`
+margin: 10px 0 0 0;
+`;
+
 interface MenuProps {
   title: string;
   event: Song | Plain | Reading | Cover;
@@ -26,13 +31,15 @@ interface MenuProps {
 interface MenuState {
   options: Array<Option>;
   didMap: boolean;
+  update: boolean;
 }
 export class Menu extends React.Component<MenuProps, MenuState> {
   constructor(props: any) {
     super(props);
     this.state = {
       options: this.mapOptions(),
-      didMap: false
+      didMap: false,
+      update: false
     };
   }
 
@@ -131,24 +138,25 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         //finish on submit!!!!!!
         return (
           <React.Fragment key={index}>
-            <h3>{item.display}</h3>
-            <Input defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} />
+            <Label>{item.display}</Label>
+            <Input defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} update={this.state.update} />
           </React.Fragment>
         );
       }
       if (item.type === 'textarea') {
         return (
           <React.Fragment key={index}>
-            <h3>{item.display}</h3>
-            <TextArea defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)}/>
+            <Label>{item.display}</Label>
+            <TextArea defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} update={this.state.update}/>
           </React.Fragment>
         );
       }
       if (item.type === 'dropdown') {
         return (
           <React.Fragment key={index}>
-            <h3>{item.display}</h3>
-            <Dropdown options={item.options} value={item.value} submitOnChange={true} onSubmit={(value) => this.props.submitHandler(item.dataname, value)}/>
+            <Label>{item.display}</Label>
+            {/* <Dropdown options={item.options} value={item.value} submitOnChange={true} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} update={this.state.update}/> */}
+            <h2>{item.value}</h2>
           </React.Fragment>
         );
       }
@@ -158,8 +166,8 @@ export class Menu extends React.Component<MenuProps, MenuState> {
       if(item.type === "search"){
         return (
           <React.Fragment key={index}>
-          <h3>{item.display}</h3>
-          <Search defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)}/>
+          <Label>{item.display}</Label>
+          <Search defaultValue={item.value} placeholder={item.display} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} update={this.state.update}/>
           </React.Fragment>
         );
       }
@@ -170,7 +178,20 @@ export class Menu extends React.Component<MenuProps, MenuState> {
     return mappedOptions;
   }
 
+  handleClose = () => {
+    this.setState(previousState => ({
+      ...previousState,
+      update: true
+    }));
+  }
+
+  componentDidUpdate() {
+    if(this.state.update){
+      this.props.onClose();
+    }
+  }
+
   render() {
-    return <Modal title={this.props.title} onClose={this.props.onClose}>{this.generateOptions()}</Modal>;
+    return <Modal title={this.props.title} onClose={this.handleClose}>{this.generateOptions()}</Modal>;
   }
 }

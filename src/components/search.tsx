@@ -20,6 +20,7 @@ interface SearchProps {
   defaultValue?: string;
   onSubmit?: any;
   submitOnChange?: boolean;
+  update: boolean;
 }
 interface SearchState {
   value: string;
@@ -41,6 +42,9 @@ export class Search extends React.Component<SearchProps, SearchState> {
 
   componentDidUpdate(previousProps: SearchProps, previousState: SearchState) {
     this.props.submitOnChange && this.props.onSubmit(this.state.value);
+    if(this.props.update){
+        this.handleSubmit();
+      }
   }
 
   render() {

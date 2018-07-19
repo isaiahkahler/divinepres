@@ -20,6 +20,7 @@ interface TextAreaProps{
     defaultValue?: string;
     onSubmit?: any;
     submitOnChange?: boolean;
+    update: boolean;
 }
 interface TextAreaState{
     value: string;
@@ -41,6 +42,9 @@ export class TextArea extends React.Component<TextAreaProps, TextAreaState>{
 
     componentDidUpdate(previousProps: TextAreaProps, previousState: TextAreaState) {
         this.props.submitOnChange && this.props.onSubmit(this.state.value);
+        if(this.props.update){
+            this.handleSubmit();
+          }
     }
 
     render() {
