@@ -6,9 +6,32 @@ import { Song, Reading, Plain, Cover, Option } from 'src/components/models';
 import { Menu } from 'src/pages/create/menu';
 import { unwatchFile } from 'fs';
 
+import { NavLink } from 'react-router-dom';
+
 const ListProgram = styled.ul`
   list-style-type: none;
   border-left: #000 solid 5px;
+`;
+
+const Subtitle = styled.h2`
+  text-align: center;
+  font-size: 4vh;
+  margin: 0;
+`;
+
+const BarItem = styled.input`
+  margin: 0 10px;
+  background-color: #ccc;
+  font-family: 'Heebo';
+  font-size: 4vh;
+  font-weight: 500;
+  border-style: none;
+  border-radius: 10px;
+  transition: 0.3s;
+  &:hover {
+    background-color: #0080ff;
+    color: #fff;
+  }
 `;
 
 interface ProgramProps {
@@ -42,6 +65,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
           event={this.state.program[this.state.menu.event]}
           onClose={this.handleCloseMenu}
           submitHandler={this.handleMenuUpdate}
+          onDelete={this.handleEventDelete}
         />
       );
     }
@@ -55,6 +79,18 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     }));
   };
 
+  handleEventDelete = () => {
+    let newProgram = this.state.program.slice();
+    delete newProgram[this.state.menu.event];
+    this.setState(previousState => ({
+      ...previousState,
+      program: newProgram,
+      menu: { active: false, event: -1 }
+    }));
+
+    this.handleCloseMenu();
+  };
+
   generateProgramEvents() {
     return this.state.program.map((item, index) => (
       <ProgramEvent item={item} key={index} id={index} onClick={this.handleProgramEventClick} />
@@ -62,14 +98,9 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
   }
 
   handleMenuUpdate = (dataName, newValue) => {
-    // console.log("dataName " + dataName);
-    // console.log("newValue " + newValue);
     if (dataName === 'search') {
       //call server to get lyrics, then update the program in state (should update DOM)
-      
-    } else if (dataName === 'type') {
-      console.log(dataName + " " + newValue);
-      //todo: event needs to be DELETED and then one will REPLACE IT
+      //also readings
     } else {
       let newProgram = this.state.program.slice();
       newProgram[this.state.menu.event][dataName] = newValue;
@@ -80,12 +111,29 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     }
   };
 
+  handlePresentationMode = () => {
+    localStorage.setItem('program', JSON.stringify(this.state.program));
+  };
+
   render() {
     let menu = this.generateMenu();
     return (
       <React.Fragment>
         {menu}
         <Page title="Create Program">
+          <Subtitle>click an event to modify it</Subtitle>
+          <div>
+            <NavLink to="/present">
+              <BarItem
+                type="button"
+                value="start presentation"
+                onClick={this.handlePresentationMode}
+              />
+            </NavLink>
+            <BarItem type="button" value="add event" />
+
+            <BarItem type="button" value="order events" />
+          </div>
           <ListProgram>{this.generateProgramEvents()}</ListProgram>
         </Page>
       </React.Fragment>

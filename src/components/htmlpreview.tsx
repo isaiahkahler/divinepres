@@ -2,7 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledPreview = styled.div`
-
+    margin: 10px 0;
+    border: 5px solid #000;
+    iframe{
+        border-style: none;
+        width: 100%;
+    }
 `;
 
 interface HTMLPreviewProps {

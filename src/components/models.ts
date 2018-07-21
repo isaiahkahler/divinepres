@@ -8,7 +8,6 @@
 
 export interface Section<T> {
   title: string;
-  icon: 'add' | 'edit' | 'none';
 }
 
 export interface Plain extends Section<Plain> {
@@ -56,7 +55,6 @@ export interface Option {
 
 export const SongMap: {
   title: Option;
-  icon: Option;
   type: Option;
   songnumber: Option;
   songtitle: Option;
@@ -64,7 +62,6 @@ export const SongMap: {
   backgroundURL: Option;
 } = {
   title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
-  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
     dataname: 'type',
     type: 'dropdown',
@@ -85,14 +82,12 @@ export const SongMap: {
 
 export const ReadingMap: {
   title: Option;
-  icon: Option;
   type: Option;
   readingtitle: Option;
   content: Option;
   page: Option;
 } = {
   title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
-  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
     dataname: 'type',
     type: 'dropdown',
@@ -106,20 +101,18 @@ export const ReadingMap: {
     value: '',
     display: 'Search for a Passage - Reading Title'
   },
-  content: { dataname: 'content', type: 'htmlpreview', value: '', display: 'Passage' },
+  content: { dataname: 'content', type: 'htmlpreview', value: '', display: 'Passage Preview' },
   page: { dataname: 'page', type: 'input', value: '', display: 'Page Number' }
 };
 
 export const CoverMap: {
   title: Option;
-  icon: Option;
   type: Option;
   backgroundURL: Option;
   covertitle: Option;
   subtitle: Option;
 } = {
   title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
-  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
     dataname: 'type',
     type: 'dropdown',
@@ -132,9 +125,8 @@ export const CoverMap: {
   subtitle: { dataname: 'subtitle', type: 'input', value: '', display: 'Cover Subtitle' }
 };
 
-export const PlainMap: { title: Option; icon: Option; type: Option } = {
+export const PlainMap: { title: Option, type: Option } = {
   title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
-  icon: { dataname: 'icon', type: 'none', value: '', display: '' },
   type: {
     dataname: 'type',
     type: 'dropdown',

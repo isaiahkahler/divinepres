@@ -17,9 +17,31 @@ import { TextArea } from 'src/components/textarea';
 import { Dropdown } from 'src/components/dropdown';
 import { HTMLPreview } from 'src/components/htmlpreview';
 import {Search} from 'src/components/search';
+import { Form } from 'src/components/form';
 
 const Label = styled.h2`
 margin: 10px 0 0 0;
+`;
+
+const StyledType = styled.div`
+  font-size: 3vh;
+  font-family: 'Heebo';
+  background-color: #eee;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  cursor: not-allowed;
+`;
+
+const StyledDelete = styled.div`
+input{
+  font-weight: 500;
+  color: #fff;
+  margin-top: 15px;
+  background-color: #ff5454;
+}
 `;
 
 interface MenuProps {
@@ -27,6 +49,7 @@ interface MenuProps {
   event: Song | Plain | Reading | Cover;
   onClose: any;
   submitHandler: any;
+  onDelete: any;
 }
 interface MenuState {
   options: Array<Option>;
@@ -156,12 +179,17 @@ export class Menu extends React.Component<MenuProps, MenuState> {
           <React.Fragment key={index}>
             <Label>{item.display}</Label>
             {/* <Dropdown options={item.options} value={item.value} submitOnChange={true} onSubmit={(value) => this.props.submitHandler(item.dataname, value)} update={this.state.update}/> */}
-            <h2>{item.value}</h2>
+            <StyledType>{item.value}</StyledType>
           </React.Fragment>
         );
       }
       if (item.type === 'htmlpreview') {
-        return <HTMLPreview html={item.value} key={index} />;
+        return(
+          <React.Fragment  key={index}>
+            <Label>{item.display}</Label>
+          <HTMLPreview html={item.value} />;
+            </React.Fragment>
+        ) 
       }
       if(item.type === "search"){
         return (
@@ -175,6 +203,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         return undefined;
       }
     });
+    mappedOptions.push(<StyledDelete key={mappedOptions.length}><Form onSubmit={this.props.onDelete} submitButton={true} submitButtonValue="Delete Event" /></StyledDelete>);
     return mappedOptions;
   }
 

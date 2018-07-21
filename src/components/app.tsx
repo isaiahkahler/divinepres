@@ -5,22 +5,23 @@ import { Home } from '../pages/home/home';
 import {Create} from '../pages/create/create';
 import 'src/components/app.css';
 import {Program} from '../pages/create/program';
+import { Present } from '../pages/present/present'
 import { Song, Plain, Reading, Cover } from 'src/components/models';
 
 const history = createHashHistory();
 
 const template:Array<Song | Plain | Reading | Cover> = [
-  {title: "Welcome and Announcements", icon: "add", type: "cover", backgroundURL: "", covertitle: "", subtitle: ""},
-  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
-  {title: "Scripture - ", icon: "add", type: "reading", readingtitle: "", content: null, page: ""},
-  {title: "Pastoral Prayer", icon: "none", type: "plain"},
-  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
-  {title: "Offertory Prayer", icon: "none", type: "plain"},
-  {title: "Offerings Received", icon: "none", type: "plain"},
-  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
-  {title: "Message - ", icon: "add", type: "reading", readingtitle: "", content: null, page: ""},
-  {title: "Hymn -", icon: "add", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
-  {title: "Benediction", icon: "none", type: "plain"},
+  {title: "Welcome and Announcements", type: "cover", backgroundURL: "", covertitle: "", subtitle: ""},
+  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Scripture - ", type: "reading", readingtitle: "", content: null, page: ""},
+  {title: "Pastoral Prayer", type: "plain"},
+  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Offertory Prayer", type: "plain"},
+  {title: "Offerings Received", type: "plain"},
+  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Message - ", type: "reading", readingtitle: "", content: null, page: ""},
+  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Benediction", type: "plain"},
 ];
 
 
@@ -34,6 +35,7 @@ export default class App extends React.Component<{}, {}> {
           {/* <Route path="/create/:id" render={(e: RouteComponentProps<any>) => <Program template={e.match.params.id} />} />  */}
           <Route path="/create/:id" render={(e: RouteComponentProps<any>) => <Program template={template} />} />  //TEMPORARY!!
           <Route path="/create" component={Create} />
+          <Route path ="/present" component={Present}/>
           <Redirect from="/" to="/home" />
         </Switch>
       </Router>

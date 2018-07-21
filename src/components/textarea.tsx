@@ -49,7 +49,7 @@ export class TextArea extends React.Component<TextAreaProps, TextAreaState>{
 
     render() {
         return(
-            <Form onSubmit={this.handleSubmit} submitButton={true} submitButtonValue="update">
+            <Form onSubmit={this.handleSubmit} >
                 <StyledTextArea onChange={this.handleChange} defaultValue={this.state.value} placeholder={this.props.placeholder || ""}/>
             </Form>
         );

@@ -28,12 +28,12 @@ a:visited {
 .center {
   text-align: center;
 }
-
+/* 
 .full-button .icon {
   height: 5vh;
   padding-right: 25px;
   vertical-align: middle;
-}
+} */
 
 .full-button h1{
     display: inline;

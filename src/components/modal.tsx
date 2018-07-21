@@ -7,7 +7,7 @@ const StyledModal = styled.div`
   height: 80vh;
   left: 10vw;
   top: 10vh;
-  z-index: 2;
+  z-index: 3;
   position: fixed;
   border-radius: 10px;
   box-shadow: 0 5px 10px rgba(10, 10, 10, 0.1), 0 0 0 2px rgba(10, 10, 10, 0.1);

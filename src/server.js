@@ -38,4 +38,10 @@ app.get('/api/hymntitle/:id', async (req, res) => {
     res.send(hymn);
 });
 
+app.get('/api/reading/:id', async (req, res) => {
+    // const id = req.params.id;
+    // const hymn = await fetchHymnTitle(id);
+    // res.send(hymn);
+});
+
 app.listen(4000, () => console.log('running on port 4000'));
