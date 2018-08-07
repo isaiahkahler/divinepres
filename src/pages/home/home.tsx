@@ -4,29 +4,15 @@ import { FullButton } from '../../components/fullbutton';
 import { PlusIcon } from '../../components/icons';
 import { NavLink } from 'react-router-dom';
 
-interface HomeState {
-  stored: Array<any>;
-}
-export class Home extends React.Component<{}, HomeState> {
+export class Home extends React.Component<{}, {}> {
   constructor(props: any) {
     super(props);
-    this.state = {stored: []};
+    this.state = {stored: ''};
   }
   grabStored() {
-    let data: any = window.localStorage.getItem('presentations');
-    if (data !== null) {
-      let presentations: Array<any> = [];
-      if (data instanceof Array) {
-        presentations = data;
-      }
-      this.setState({
-        stored: presentations
-        //needs to be stored in format
-        //[
-        // {"title": "the title", "program": [...]}
-        //]
-      });
-    }
+    let data: string | undefined = window.localStorage.getItem('date');
+    console.log(data);
+    return data && <NavLink to="/present"><FullButton label={data + " - Last Presentation"} /></NavLink>;
   }
 
   render() {
@@ -37,7 +23,7 @@ export class Home extends React.Component<{}, HomeState> {
             <PlusIcon />
           </FullButton>
         </NavLink>
-        {this.state.stored.map((item, index) => <FullButton label={item.title} />)}
+        {this.grabStored()}
       </Page>
     );
   }

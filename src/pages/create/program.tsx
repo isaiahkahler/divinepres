@@ -119,6 +119,8 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
 
   handlePresentationMode = () => {
     localStorage.setItem('program', JSON.stringify(this.state.program));
+    let d = new Date;
+    localStorage.setItem('date', d.toLocaleDateString());
   };
 
   handleSongSearch = async (hymn: number) => {
