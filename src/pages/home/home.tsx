@@ -1,7 +1,7 @@
 import React from 'react';
-import { Page } from 'src/components/page';
-import { FullButton } from 'src/components/fullbutton';
-import { PlusIcon } from 'src/components/icons';
+import { Page } from '../../components/page';
+import { FullButton } from '../../components/fullbutton';
+import { PlusIcon } from '../../components/icons';
 import { NavLink } from 'react-router-dom';
 
 interface HomeState {

@@ -1,10 +1,10 @@
 import React from 'react';
-import { Page } from 'src/components/page';
+import { Page } from '../../components/page';
 import styled from 'styled-components';
-import { ProgramEvent } from 'src/pages/create/event';
-import { Song, Reading, Plain, Cover, Option } from 'src/components/models';
-import { Menu } from 'src/pages/create/menu';
-import { fetchHymn, fetchHymnTitle } from 'src/pages/create/fetch-hmyn';
+import { ProgramEvent } from './event';
+import { Song, Reading, Plain, Cover, Option } from '../../components/models';
+import { Menu } from './menu';
+import { fetchHymn, fetchHymnTitle, fetchReading } from './fetch-resources';
 import { unwatchFile } from 'fs';
 
 import { NavLink } from 'react-router-dom';
@@ -82,7 +82,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
 
   handleEventDelete = () => {
     let newProgram = this.state.program.slice();
-    delete newProgram[this.state.menu.event];
+    newProgram.splice(this.state.menu.event,1);
     this.setState(previousState => ({
       ...previousState,
       program: newProgram,
@@ -101,17 +101,12 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
   handleMenuUpdate = (dataName, newValue) => {
     if (dataName === 'songnumber') {
       if (this.state.program[this.state.menu.event].type === 'song') {
-        // this.handleSongSearch(newValue);
-        let newProgram = this.state.program.slice();
-        newProgram[this.state.menu.event]["lyrics"] = "yah";
-        newProgram[this.state.menu.event]["songtitle"] = "yeet";
-        this.setState(previousState => ({
-          ...previousState,
-          program: newProgram
-        }))
+        this.handleSongSearch(newValue);
       }
-      //call server to get lyrics, then update the program in state (should update DOM)
-      //also readings
+    } else if(dataName === "readingtitle") {
+      if(this.state.program[this.state.menu.event].type === 'reading') {
+        this.handleReadingSearch(newValue);
+      }
     } else {
       let newProgram = this.state.program.slice();
       newProgram[this.state.menu.event][dataName] = newValue;
@@ -132,13 +127,36 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     const title = await fetchHymnTitle(hymn.toString());
     let newProgram = this.state.program.slice();
     newProgram[event]['lyrics'] = lyrics;
-    newProgram[event]['songtitle'] = title;
+    newProgram[event]['songtitle'] = title.substr(hymn.toString().length + 2);
     newProgram[event]['songnumber'] = hymn.toString();
     this.setState(previousState => ({
       ...previousState,
-      program: newProgram
+      program: newProgram,
+      menu: {event: previousState.menu.event, active: false}
     }));
   };
+
+  handleReadingSearch = async (passage: string) => {
+    const event = this.state.menu.event;
+    const reading = await fetchReading(passage);
+    let newProgram = this.state.program.slice();
+    newProgram[event]['content'] = reading;
+    newProgram[event]['readingtitle'] = passage;
+    this.setState(previousState => ({
+      ...previousState,
+      program: newProgram,
+      menu: {event: previousState.menu.event, active: false}
+    }));
+  };
+
+  componentDidUpdate(){
+    if(!this.state.menu.active && this.state.menu.event !== -1){
+      this.setState(previousState => ({
+        ...previousState,
+        menu: {active: true, event: previousState.menu.event}
+      }));
+    }
+  }
 
   render() {
     let menu = this.generateMenu();

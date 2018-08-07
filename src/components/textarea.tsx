@@ -1,9 +1,10 @@
 import React, { FormEvent } from 'react';
 import styled from 'styled-components';
-import { Form } from 'src/components/form';
+import { Form } from './form';
 
 const StyledTextArea = styled.textarea`
   width: 100%;
+  height: 50vh;
   font-size: 3vh;
   font-family: 'Heebo';
   border: 0px;

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import {Section, Song, Reading, Plain, Cover} from 'src/components/models';
+import {Section, Song, Reading, Plain, Cover} from '../../components/models';
 
 const EventTitle = styled.h1`
   transition: 0.3s;

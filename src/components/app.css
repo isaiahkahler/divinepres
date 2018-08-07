@@ -1,3 +1,7 @@
+body {
+  margin: 0;
+}
+
 h1 {
   font-family: 'Heebo', sans-serif;
   font-size: 5vh;
@@ -28,18 +32,46 @@ a:visited {
 .center {
   text-align: center;
 }
-/* 
-.full-button .icon {
-  height: 5vh;
-  padding-right: 25px;
-  vertical-align: middle;
-} */
 
-.full-button h1{
-    display: inline;
-    vertical-align: middle  
+.full-button h1 {
+  display: inline;
+  vertical-align: middle;
 }
-/* 
-.full-button:hover {
-  background-color: #0080ff50;
-} */
+
+.cover {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+.frame{font-family: 'Heebo'}
+.frame h1 {
+  font-size: 5vh;
+}
+.frame h2 {
+  font-size: 4vh;
+}
+.frame h3 {
+  font-size: 3vh;
+}
+.frame p, a {
+  font-size: 2vh;
+}
+
+.slide {
+  height: 100vh;
+  width: 100%;
+}
+
+.slide h1 {
+  font-size: 8vh;
+}
+
+.slide h2 {
+  font-size: 4vh;
+}
+
+.present {
+  background-color: #000;
+  color: #fff;
+}

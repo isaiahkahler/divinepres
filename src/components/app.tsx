@@ -6,21 +6,21 @@ import {Create} from '../pages/create/create';
 import 'src/components/app.css';
 import {Program} from '../pages/create/program';
 import { Present } from '../pages/present/present'
-import { Song, Plain, Reading, Cover } from 'src/components/models';
+import { Song, Plain, Reading, Cover } from './models';
 
 const history = createHashHistory();
 
 const template:Array<Song | Plain | Reading | Cover> = [
-  {title: "Welcome and Announcements", type: "cover", backgroundURL: "", covertitle: "", subtitle: ""},
-  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Welcome and Announcements", type: "cover", backgroundURL: "", covertitle: "Sunday Morning Worship", subtitle: "", fontcolor: "#fff"},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
   {title: "Scripture - ", type: "reading", readingtitle: "", content: null, page: ""},
   {title: "Pastoral Prayer", type: "plain"},
-  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
   {title: "Offertory Prayer", type: "plain"},
   {title: "Offerings Received", type: "plain"},
-  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
   {title: "Message - ", type: "reading", readingtitle: "", content: null, page: ""},
-  {title: "Hymn -", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
   {title: "Benediction", type: "plain"},
 ];
 

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Page } from 'src/components/page';
-import { FullButton } from 'src/components/fullbutton';
+import { Page } from '../../components/page';
+import { FullButton } from '../../components/fullbutton';
 import { NavLink } from 'react-router-dom';
 
 export class Create extends React.Component<{}, {}> {

@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 import styled from 'styled-components';
-import { Form } from 'src/components/form';
+import { Form } from './form';
 
 const StyledSelect = styled.select`
   width: 100%;

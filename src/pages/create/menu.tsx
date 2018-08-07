@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Modal } from 'src/components/modal';
+import { Modal } from '../../components/modal';
 import {
   Song,
   Plain,
@@ -11,13 +11,13 @@ import {
   ReadingMap,
   CoverMap,
   PlainMap
-} from 'src/components/models';
-import { Input } from 'src/components/input';
-import { TextArea } from 'src/components/textarea';
-import { Dropdown } from 'src/components/dropdown';
-import { HTMLPreview } from 'src/components/htmlpreview';
-import { Search } from 'src/components/search';
-import { Form } from 'src/components/form';
+} from '../../components/models';
+import { Input } from '../../components/input';
+import { TextArea } from '../../components/textarea';
+import { Dropdown } from '../../components/dropdown';
+import { HTMLPreview } from '../../components/htmlpreview';
+import { Search } from '../../components/search';
+import { Form } from '../../components/form';
 
 const Label = styled.h2`
   margin: 10px 0 0 0;
@@ -109,12 +109,10 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         });
       }
     }
-    console.log(newOptions);
     return newOptions;
   }
 
   generateOptions(): Array<JSX.Element> {
-    console.log('gen options');
     let mappedOptions = this.mapOptions().map((item, index) => {
       if (item.type === 'input') {
         return (
@@ -154,7 +152,7 @@ export class Menu extends React.Component<MenuProps, MenuState> {
         return (
           <React.Fragment key={index}>
             <Label>{item.display}</Label>
-            <HTMLPreview html={item.value} />;
+            <HTMLPreview html={item.value} />
           </React.Fragment>
         );
       }

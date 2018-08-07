@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Icon = styled.svg`
   height: 5vh;
   padding: 0 15px;
+  vertical-align: middle;
 `;
 
 //remove className="icon" if unnecessary

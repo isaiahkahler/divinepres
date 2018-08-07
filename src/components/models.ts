@@ -34,6 +34,7 @@ export interface Cover extends Section<Cover> {
   backgroundURL: string | undefined;
   covertitle: string;
   subtitle: string;
+  fontcolor: string;
 }
 
 //menu
@@ -49,7 +50,6 @@ export interface Option {
   display: string;
   options?: Array<string>;
   dataname: string;
-  parentUpdate?: string;
 }
 
 ///UHHHhHhHhbH idk if ill use section label yet
@@ -79,15 +79,13 @@ export const SongMap: {
     dataname: 'songtitle',
     type: 'input',
     value: '',
-    display: 'Song Title',
-    parentUpdate: ''
+    display: 'Song Title'
   },
   lyrics: {
     dataname: 'lyrics',
     type: 'textarea',
     value: '',
-    display: 'Lyrics',
-    parentUpdate: ''
+    display: 'Lyrics'
   },
   backgroundURL: { dataname: 'backgroundURL', type: 'none', value: '', display: '' }
 };
@@ -122,6 +120,7 @@ export const CoverMap: {
   backgroundURL: Option;
   covertitle: Option;
   subtitle: Option;
+  fontcolor: Option;
 } = {
   title: { dataname: 'title', type: 'input', value: '', display: 'Event Title' },
   type: {
@@ -130,9 +129,10 @@ export const CoverMap: {
     value: '',
     display: 'Event Type'
   },
-  backgroundURL: { dataname: 'backgroundURL', type: 'none', value: '', display: 'Background URL' },
+  backgroundURL: { dataname: 'backgroundURL', type: 'input', value: '', display: 'Background Image URL' },
   covertitle: { dataname: 'covertitle', type: 'input', value: '', display: 'Cover Title' },
-  subtitle: { dataname: 'subtitle', type: 'input', value: '', display: 'Cover Subtitle' }
+  subtitle: { dataname: 'subtitle', type: 'input', value: '', display: 'Cover Subtitle' },
+  fontcolor: { dataname: 'fontcolor', type: 'input', value: '#fff', display: "Font Color (Hex value)"}
 };
 
 export const PlainMap: { title: Option; type: Option } = {

@@ -39,9 +39,24 @@ app.get('/api/hymntitle/:id', async (req, res) => {
 });
 
 app.get('/api/reading/:id', async (req, res) => {
-    const id = req.params.id;
-    // const hymn = await fetchHymnTitle(id);
-    // res.send(hymn);
+    const id = decodeURIComponent(req.params.id);
+    const reading = await fetchReading(id);
+    res.send(reading);
 });
+
+
+async function fetchReading(passage) {
+  const response = await fetch(`https://www.biblegateway.com/passage/?search=${passage.replace(" ", "+")}&version=NKJV`);
+  const readingHTML = await response.text();
+  const document = new JSDOM(readingHTML).window.document;
+  const dummyElement = document.createElement('div');
+  dummyElement.innerHTML = readingHTML;
+  const passageElement = dummyElement.querySelector('.passage-content');
+  passageElement.querySelector(".footnotes").outerHTML = '';
+  passageElement.querySelector(".crossrefs").outerHTML = '';
+  if (!passageElement) return null;
+  const passageHTML = passageElement.outerHTML;
+  return passageHTML;
+}
 
 app.listen(4000, () => console.log('running on port 4000'));

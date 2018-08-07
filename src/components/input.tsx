@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 import styled from 'styled-components';
-import { Form } from 'src/components/form';
+import { Form } from './form';
 
 const StyledInput = styled.input`
   width: 100%;
@@ -34,7 +34,7 @@ export class Input extends React.Component<InputProps, InputState> {
 
   handleSubmit = () => {
     this.props.onSubmit && this.props.onSubmit(this.state.value);
-  }
+  };
 
   handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ value: event.currentTarget.value });
@@ -42,7 +42,7 @@ export class Input extends React.Component<InputProps, InputState> {
 
   componentDidUpdate(previousProps: InputProps, previousState: InputState) {
     this.props.submitOnChange && this.props.onSubmit(this.state.value);
-    if(this.props.update){
+    if (this.props.update) {
       this.handleSubmit();
     }
   }

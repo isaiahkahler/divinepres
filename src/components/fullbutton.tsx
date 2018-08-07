@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Box } from 'src/components/box';
+import { Box } from './box';
 
 const Button = styled.div`
   margin-top: 10px;
