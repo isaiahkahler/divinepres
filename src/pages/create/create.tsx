@@ -10,7 +10,9 @@ export class Create extends React.Component<{}, {}> {
         <NavLink to="/create/TMBC">
           <FullButton label="TMBC" />
         </NavLink>
-        <FullButton label="Blank" />
+        <NavLink to="/create/blank">
+          <FullButton label="Blank" />
+        </NavLink>
       </Page>
     );
   }

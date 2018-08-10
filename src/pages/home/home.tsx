@@ -12,7 +12,7 @@ export class Home extends React.Component<{}, {}> {
   grabStored() {
     let data: string | undefined = window.localStorage.getItem('date');
     console.log(data);
-    return data && <NavLink to="/present"><FullButton label={data + " - Last Presentation"} /></NavLink>;
+    return data && <NavLink to="/create/last"><FullButton label={data + " - Last Presentation"} /></NavLink>;
   }
 
   render() {

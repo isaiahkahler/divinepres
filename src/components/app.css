@@ -44,6 +44,10 @@ a:visited {
   background-position: center center;
 }
 
+.song .title {
+  text-align: center;
+}
+
 .frame{font-family: 'Heebo'}
 .frame h1 {
   font-size: 5vh;
@@ -69,6 +73,18 @@ a:visited {
 
 .slide h2 {
   font-size: 4vh;
+}
+
+.reading h3 {
+  font-size: 5vh;
+  margin: 0 5px;
+}
+
+.reading p {
+  font-size: 6vh;
+  font-family: 'Heebo';
+  font-weight: 500;
+  margin: 0 5px;
 }
 
 .present {
