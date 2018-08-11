@@ -87,7 +87,7 @@ export const SongMap: {
     value: '',
     display: 'Lyrics'
   },
-  backgroundURL: { dataname: 'backgroundURL', type: 'none', value: '', display: '' }
+  backgroundURL: { dataname: 'backgroundURL', type: 'input', value: '', display: 'Background Image URL' }
 };
 
 export const ReadingMap: {

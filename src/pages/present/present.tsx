@@ -104,7 +104,7 @@ export class Present extends React.Component<{}, PresentState> {
       return (
         <ReadingSlide
           readingtitle={event.readingtitle}
-          pagenumner={event.page}
+          pagenumber={event.page}
           content={event.content}
           slideindex={this.state.slideindex}
           nextSection={this.nextEvent}

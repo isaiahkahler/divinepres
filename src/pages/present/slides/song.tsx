@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StyledSong = styled.div`
   margin: 0 5vw;
+  padding: 5vw 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -72,6 +73,13 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
   generateTitle() {
     if(this.state.slideprogress !== 0){
         return this.props.songtitle;
+    }
+  }
+
+  componentDidMount() {
+    if(!!this.props.backgroundURL){
+      let el:HTMLElement = document.querySelector('.song');
+      el.style.backgroundImage = `url('${this.props.backgroundURL}')`; 
     }
   }
 

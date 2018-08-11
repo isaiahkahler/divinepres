@@ -12,15 +12,15 @@ const history = createHashHistory();
 
 export const tmbctemplate:Array<Song | Plain | Reading | Cover> = [
   {title: "Welcome and Announcements", type: "cover", backgroundURL: "https://i.imgur.com/iUGuUlq.jpg", covertitle: "Sunday Morning Worship", subtitle: "", fontcolor: "#fff"},
-  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/KtECWc0.jpg"},
   {title: "Scripture - ", type: "reading", readingtitle: "", content: null, page: ""},
   {title: "Pastoral Prayer", type: "plain"},
-  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/Op34GwE.jpg"},
   {title: "Offertory Prayer", type: "plain"},
   {title: "Offerings Received", type: "plain"},
-  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/q5ekSWX.jpg"},
   {title: "Message - ", type: "reading", readingtitle: "", content: null, page: ""},
-  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: ""},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/M0ehlvG.jpg"},
   {title: "Benediction", type: "plain"},
 ];
 
