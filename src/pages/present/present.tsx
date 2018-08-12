@@ -15,7 +15,7 @@ export class Present extends React.Component<{}, PresentState> {
   constructor(props) {
     super(props);
     this.state = { program: JSON.parse(localStorage.getItem('program')), event: 0, slideindex: 0 };
-    document.addEventListener('keypress', event => {
+    document.addEventListener('keydown', event => {
       switch (event.key) {
         case 'ArrowLeft':
           this.previousSlide();

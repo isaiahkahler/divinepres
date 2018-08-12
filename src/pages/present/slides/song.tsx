@@ -78,8 +78,15 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
 
   componentDidMount() {
     if(!!this.props.backgroundURL){
-      let el:HTMLElement = document.querySelector('.song');
+      let el:HTMLElement = document.querySelector('.slide');
       el.style.backgroundImage = `url('${this.props.backgroundURL}')`; 
+    }
+  }
+
+  componentWillUnmount(){
+    if(!!this.props.backgroundURL){
+      let el:HTMLElement = document.querySelector('.slide');
+      el.style.backgroundImage = ''; 
     }
   }
 

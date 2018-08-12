@@ -6,6 +6,9 @@ const StyledReading = styled.div`
 `;
 const StyledContent = styled.div`
   overflow: auto;
+  ::-webkit-scrollbar { 
+    display: none; 
+  }
 `;
 
 const StyledTitleSlide = styled.div`
@@ -57,13 +60,17 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
   }
 
   scrollTextIntoView = () => {
+    // console.log();
     if(this.state.slideprogress >= 1 && this.state.slideprogress < this.state.slidetotal) {
-        this.state.elements[this.state.slideprogress - 1].scrollIntoView({behavior: "smooth"});
-        this.boldActiveVerse();
+      let els = document.getElementsByClassName('text');
+      els[this.state.slideprogress-1].scrollIntoView({behavior: "smooth"});
+      console.log(els[this.state.slideprogress -1])
+         //this.state.elements[this.state.slideprogress - 1].scrollIntoView({behavior: "smooth"});
+        this.highlightActiveVerse();
     }
   }
 
-  boldActiveVerse = () => {
+  highlightActiveVerse = () => {
     if(document.querySelector('.activeText') !== null){
         document.querySelector('.activeText').classList.remove("activeText");
     }
