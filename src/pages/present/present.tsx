@@ -133,6 +133,15 @@ export class Present extends React.Component<{}, PresentState> {
     }
   }
 
+  componentDidMount() {
+    document.body.style.background = '#000';
+  }
+
+  componentWillUnmount() {
+    
+    document.body.style.background = '';
+  }
+
   render() {
     // let slide = this.generateSlide(this.state.event);
     return <div className="present">{this.generateSlide(this.state.event)}</div>;

@@ -6,6 +6,12 @@ let StyledCover = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    & h1 {
+        font-size: 9vh;
+    }
+    & h2 {
+        font-size: 5vh;
+    }
 `;
 
 interface CoverSlideProps {
@@ -30,7 +36,7 @@ export class CoverSlide extends React.Component<CoverSlideProps, {}> {
 
     render() {
         return(
-            <StyledCover className="slide cover">
+            <StyledCover className="slide cover animated fadeIn">
                 <h1>{this.props.title}</h1>
                 <h2>{this.props.subtitle}</h2>
             </StyledCover>

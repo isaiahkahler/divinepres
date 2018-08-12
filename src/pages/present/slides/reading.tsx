@@ -3,6 +3,21 @@ import styled from 'styled-components';
 
 const StyledReading = styled.div`
   margin: 0 5vw;
+  & h1 {
+    font-size: 8vh;
+  }
+  & h3 {
+  font-size: 5vh;
+  margin: 0 5px;
+}
+
+& p {
+  font-size: 6vh;
+  font-family: 'Heebo';
+  font-weight: 500;
+  margin: 0 5px;
+}
+
 `;
 const StyledContent = styled.div`
   overflow: auto;
@@ -21,8 +36,9 @@ const StyledTitleSlide = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: 1s;
   h1 {
-      font-size: 8vh;
+      font-size: 10vh;
   }
   h2 {
       font-size: 5vh;
@@ -136,11 +152,11 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
 
   render() {
     return (
-      <div className="slide">
+      <div className="slide animated fadeIn">
         {this.generateTitleSlide()}
         <StyledReading className="reading">
           <h1 id="readingtitle">
-            {this.props.readingtitle + ` ${this.state.slideprogress}/${this.state.slidetotal}`}
+            {this.props.readingtitle}
           </h1>
           <StyledContent id="contentparent" />
         </StyledReading>

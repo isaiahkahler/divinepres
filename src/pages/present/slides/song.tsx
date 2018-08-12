@@ -6,7 +6,12 @@ const StyledSong = styled.div`
   padding: 5vw 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
+  height: 100vh;
+  & h1 {
+    font-size: 7vh;
+    text-shadow: 5px 5px 5px #000;
+  }
 `;
 
 const StyledFixedLayer = styled.div`
@@ -47,7 +52,6 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
 
   componentDidUpdate() {
     let slides = document.getElementsByClassName('slide');
-    console.log(this.state.slideprogress)
 
     if (this.state.slideindex < this.props.slideindex) {
       if (this.state.slideprogress + 1 === this.state.slidetotal) {
@@ -88,7 +92,21 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
       for (let i = 0; i < els.length; i++) {
         (els[i] as HTMLElement).style.backgroundImage = `url('${this.props.backgroundURL}')`;
       }
+    } else {
+      let els = document.querySelectorAll('.slide');
+      for (let i = 0; i < els.length; i++) {
+        (els[i] as HTMLElement).style.background = `#000`;
+      }
     }
+
+    setTimeout(() => {
+      let elems = document.querySelectorAll(".invis");
+
+  [].forEach.call(elems, function(el) {
+    el.classList.remove("invis");
+});
+    }, 1000);
+    
   }
 
   componentWillUnmount() {
@@ -110,7 +128,7 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
     let slides: Array<JSX.Element> = [];
     for (let item of this.state.lyricblocks) {
       slides.push(
-        <StyledFixedLayer style={{ zIndex: zindex }} key={index}>
+        <StyledFixedLayer style={{ zIndex: zindex }} key={index} className={(index === 0) ? "animated fadeIn" : "invis"}>
           <div className="slide">
             <StyledSong className="song">
               <h1 className="title">{index !== 0 ? this.props.songtitle : ''}</h1>
