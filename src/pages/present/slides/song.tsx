@@ -78,22 +78,6 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
     }
   }
 
-  //unused
-  generateLyrics() {
-    let innerHTML = this.state.lyricblocks[this.state.slideprogress].replace(
-      /(?:\r\n|\r|\n)/g,
-      '<br />'
-    );
-    return { __html: innerHTML };
-  }
-
-  //unused
-  generateTitle() {
-    if (this.state.slideprogress !== 0) {
-      return this.props.songtitle;
-    }
-  }
-
   componentDidMount() {
     let slides = document.getElementsByClassName('slide');
     for (let i = 0; i < slides.length; i++) {
@@ -149,12 +133,5 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
 
   render() {
     return this.generateSongSlide();
-    //   <div className="slide">
-    //   {/* {this.generateSongSlide()} */}
-    // <StyledSong className="song">
-    //   <h1 className="title">{this.generateTitle()}</h1>
-    //   <h1 className="lyrics" dangerouslySetInnerHTML={this.generateLyrics()} />
-    // </StyledSong>
-    //   </div>
   }
 }
