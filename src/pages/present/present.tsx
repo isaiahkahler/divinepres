@@ -24,10 +24,10 @@ export class Present extends React.Component<{}, PresentState> {
           this.nextSlide();
           break;
         case 'ArrowUp':
-          this.nextEvent();
+          this.previousEvent();
           break;
         case 'ArrowDown':
-          this.previousEvent();
+          this.nextEvent();
           break;
         default:
       }
@@ -35,7 +35,10 @@ export class Present extends React.Component<{}, PresentState> {
   }
 
   nextSlide = () => {
-    if (this.state.program[this.state.event].type === 'song' || this.state.program[this.state.event].type === 'reading') {
+    if (
+      this.state.program[this.state.event].type === 'song' ||
+      this.state.program[this.state.event].type === 'reading'
+    ) {
       this.setState(previousState => ({
         ...previousState,
         slideindex: previousState.slideindex + 1
@@ -46,7 +49,10 @@ export class Present extends React.Component<{}, PresentState> {
   };
 
   previousSlide = () => {
-    if (this.state.program[this.state.event].type === 'song' || this.state.program[this.state.event].type === 'reading') {
+    if (
+      this.state.program[this.state.event].type === 'song' ||
+      this.state.program[this.state.event].type === 'reading'
+    ) {
       this.setState(previousState => ({
         ...previousState,
         slideindex: previousState.slideindex - 1
@@ -54,7 +60,6 @@ export class Present extends React.Component<{}, PresentState> {
     } else {
       this.previousEvent();
     }
-
   };
 
   nextEvent = () => {
@@ -73,7 +78,7 @@ export class Present extends React.Component<{}, PresentState> {
         event: previousState.event - 1
       }));
     }
-  }
+  };
 
   generateSlide(eventID: number): JSX.Element {
     let event = this.state.program[eventID];

@@ -90,9 +90,14 @@ export class SongSlide extends React.Component<SongSlideProps, SongSlideState> {
     }
   }
 
+  generateSongSlide() {
+    
+  }
+
   render() {
     return (
         <div className="slide">
+        {this.generateSongSlide()}
       <StyledSong className="song">
         <h1 className="title">{this.generateTitle()}</h1>
         <h1 className="lyrics" dangerouslySetInnerHTML={this.generateLyrics()} />

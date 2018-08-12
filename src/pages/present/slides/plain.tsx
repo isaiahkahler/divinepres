@@ -8,9 +8,10 @@ const StyledPlain = styled.div`
 `;
 
 const StyledUL = styled.ul`
-  margin: 0;
+  margin: 0 0 0 5vw;
   position: fixed;
   list-style: none;
+  transition: 1s;
 `;
 
 const StyledArrow = styled.span`
@@ -24,9 +25,6 @@ interface PlainProps {
   event: number;
 }
 
-interface PlainState {
-  // items: Array<JSX.Element>;
-}
 
 export class PlainSlide extends React.Component<PlainProps, {}> {
   constructor(props) {
@@ -82,17 +80,26 @@ export class PlainSlide extends React.Component<PlainProps, {}> {
 
   componentDidMount() {
     let ul = document.querySelector('ul');
-    let top = document.querySelector('.slide').getBoundingClientRect().height / 2 -
-    document.querySelector('.event').getBoundingClientRect().top / 2 +
-    'px';
-    // let smalltop = parseInt(top) - document.querySelector('.event').getBoundingClientRect().height + 'px';
-    // ul.style.top = smalltop;
-    ul.style.top = top;
-    (document.querySelector('.arrow') as HTMLElement).style.top = top;
-      
-    ul.style.marginLeft = document.querySelector('.arrow').getBoundingClientRect().width + 'px';
-    // ul.style.transition = '1s';
-    // ul.style.top = top;
+    let event = document.querySelector('.event');
+    let arrow = document.querySelector('.arrow');
+    let slide = document.querySelector('.slide');
+    let top =
+      slide.getBoundingClientRect().height / 2 -
+      event.getBoundingClientRect().top -
+      event.getBoundingClientRect().height / 2 +
+      'px';
+      let before = parseInt(top) + event.getBoundingClientRect().height + 'px';
+    ul.style.top = before;
+    (arrow as HTMLElement).style.top =
+      slide.getBoundingClientRect().height / 2 - arrow.getBoundingClientRect().height / 2 + 'px';
+
+    // ul.style.marginLeft = arrow.getBoundingClientRect().width + 'px';
+
+    // this.setState({stage: 1, top: top});
+
+    setTimeout(() => {
+      ul.style.top = top;
+    }, 1000);
   }
 
   render() {
