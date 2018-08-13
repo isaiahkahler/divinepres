@@ -42,11 +42,23 @@ a:visited {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
+  color: #fff;
+
+}
+
+.plain{
+  color: #fff;
+
 }
 
 .song .title {
   text-align: center;
   margin-bottom: 25px;
+}
+
+#readingtitle {
+  color: #fff;
+
 }
 
 .frame{font-family: 'Heebo'}
@@ -72,6 +84,11 @@ a:visited {
   background-position: center center;
 }
 
+.song {
+  /* color: #ccc; */
+  color: #fff;
+}
+
 /* .slide h1 {
   font-size: 7vh;
 }
@@ -83,12 +100,12 @@ a:visited {
 
 .present {
   background-color: #000;
-  color: #fff;
+  /* color: #fff; */
 }
 
 .activeText {
   /* font-weight: 900; */
-  color: #0080ff;
+  color: #fff;
   transition: 0.3s;
 }
 
@@ -102,6 +119,8 @@ a:visited {
 }
 
 .oldevent {
-  color: #0080ff;
+  color: #00edff;
   transition: 0.75s;
 }
+
+/* html {overflow: -moz-scrollbars-none;} */

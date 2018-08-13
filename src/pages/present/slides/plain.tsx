@@ -16,6 +16,7 @@ const StyledUL = styled.ul`
   position: fixed;
   list-style: none;
   transition: 1s;
+  color: #fff;
 `;
 
 const StyledArrow = styled.span`
@@ -131,7 +132,7 @@ export class PlainSlide extends React.Component<PlainProps, PlainState> {
 
     setTimeout(() => {
       ul.style.top = top;
-      (event as HTMLElement).style.color = "#0080ff";
+      (event as HTMLElement).style.color = "#00edff";
       (oldevent as HTMLElement).style.color = "#fff";
     }, 1000);
   }
@@ -158,7 +159,7 @@ export class PlainSlide extends React.Component<PlainProps, PlainState> {
 
     setTimeout(() => {
       ul.style.top = parseInt(ul.style.top) - event.getBoundingClientRect().height + 'px';
-      (event as HTMLElement).style.color = "#0080ff";
+      (event as HTMLElement).style.color = "#ccc";
       (oldevent as HTMLElement).style.color = "#fff";
     }, 1000);
 

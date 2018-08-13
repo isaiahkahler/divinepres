@@ -19,6 +19,7 @@ export const tmbctemplate:Array<Song | Plain | Reading | Cover> = [
   {title: "Offertory Prayer", type: "plain"},
   {title: "Offerings Received", type: "plain"},
   {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/q5ekSWX.jpg"},
+  {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/q5ekSWX.jpg"},
   {title: "Message - ", type: "reading", readingtitle: "", content: null, page: ""},
   {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "https://i.imgur.com/M0ehlvG.jpg"},
   {title: "Benediction", type: "plain"},

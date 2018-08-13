@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledReading = styled.div`
+  color: #7a7a7a;
   margin: 0 5vw;
   & h1 {
     font-size: 8vh;
@@ -12,7 +13,7 @@ const StyledReading = styled.div`
 }
 
 & p {
-  font-size: 6vh;
+  font-size: 6.5vh;
   font-family: 'Heebo';
   font-weight: 500;
   margin: 0 5px;
@@ -21,6 +22,7 @@ const StyledReading = styled.div`
 `;
 const StyledContent = styled.div`
   overflow: auto;
+  overflow-y: -moz-hidden-unscrollable;
   ::-webkit-scrollbar { 
     display: none; 
   }
@@ -37,6 +39,7 @@ const StyledTitleSlide = styled.div`
   justify-content: center;
   align-items: center;
   transition: 1s;
+  color: #fff;
   h1 {
       font-size: 10vh;
   }
@@ -75,12 +78,13 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
     };
   }
 
-  scrollTextIntoView = () => {
+  scrollTextIntoView(){
     // console.log();
     if(this.state.slideprogress >= 1 && this.state.slideprogress < this.state.slidetotal) {
-      let els = document.getElementsByClassName('text');
+      let els = document.querySelectorAll('.text');
       els[this.state.slideprogress-1].scrollIntoView({behavior: "smooth"});
-      console.log(els[this.state.slideprogress -1])
+      // els[this.state.slideprogress-1].scrollTo(document.querySelector('.readingtitle').getBoundingClientRect().height + "px");
+      // console.log(els[this.state.slideprogress -1])
          //this.state.elements[this.state.slideprogress - 1].scrollIntoView({behavior: "smooth"});
         this.highlightActiveVerse();
     }
