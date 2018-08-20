@@ -1,0 +1,15 @@
+{
+    "program": [
+        {"id": 0, "type": "cover", "title": "Welcome and Announcements"},
+        {"id": 1, "type": "song", "title": "Hymn - ", "songtitle": ""},
+        {"id": 2, "type": "reading", "title": "Scripture - "},
+        {"id": 3, "type": "plain", "title": "Pastoral Prayer"},
+        {"id": 4, "type": "song", "title": "Hymn - ", "songtitle": ""},
+        {"id": 5, "type": "plain", "title": "Offertory Prayer"},
+        {"id": 6, "type": "plain", "title":"Offerings Received"},
+        {"id": 7, "type": "song", "title": "Hymn - ", "songtitle": ""},
+        {"id": 8, "type": "reading", "title": "Message - "},
+        {"id": 9, "type": "song", "title": "Hymn - ", "songtitle": ""},
+        {"id": 10, "type": "plain", "title": "Benediction"}
+    ]
+}
