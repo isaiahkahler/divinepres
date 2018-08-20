@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledReading = styled.div`
-  color: #7a7a7a;
+  color: #a3a3a3;
   margin: 0 5vw;
   & h1 {
     font-size: 8vh;

@@ -132,7 +132,7 @@ export class PlainSlide extends React.Component<PlainProps, PlainState> {
 
     setTimeout(() => {
       ul.style.top = top;
-      (event as HTMLElement).style.color = "#00edff";
+      (event as HTMLElement).style.color = "#a3a3a3";
       (oldevent as HTMLElement).style.color = "#fff";
     }, 1000);
   }
@@ -159,7 +159,7 @@ export class PlainSlide extends React.Component<PlainProps, PlainState> {
 
     setTimeout(() => {
       ul.style.top = parseInt(ul.style.top) - event.getBoundingClientRect().height + 'px';
-      (event as HTMLElement).style.color = "#ccc";
+      (event as HTMLElement).style.color = "#a3a3a3";
       (oldevent as HTMLElement).style.color = "#fff";
     }, 1000);
 
