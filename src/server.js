@@ -54,6 +54,18 @@ async function fetchReading(passage) {
   const passageElement = dummyElement.querySelector('.passage-content');
   passageElement.querySelector(".footnotes").outerHTML = '';
   passageElement.querySelector(".crossrefs").outerHTML = '';
+
+
+  let chapters = passageElement.getElementsByClassName('chapternum');
+  for(let i = 0; i < chapters.length; i++){
+    chapters[i].classList.add('slideitem');
+  }
+  let verses = passageElement.getElementsByClassName('versenum');
+  for(let i = 0; i < verses.length; i++){
+    verses[i].classList.add('slideitem');
+  }
+
+
   if (!passageElement) return null;
   const passageHTML = passageElement.outerHTML;
   return passageHTML;

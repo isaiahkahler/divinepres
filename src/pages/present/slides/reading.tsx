@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledReading = styled.div`
-  color: #a3a3a3;
+  /* color: #a3a3a3; */
+  color: #fff;
   margin: 0 5vw;
   & h1 {
     font-size: 8vh;
@@ -69,7 +70,7 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
     super(props);
     let dummyEl = document.createElement('div');
     dummyEl.innerHTML = this.props.content;
-    let total = dummyEl.getElementsByClassName('text').length + 1;
+    let total = dummyEl.getElementsByClassName('slideitem').length + 1;
     this.state = {
       slideindex: this.props.slideindex,
       slideprogress: 0,
@@ -81,7 +82,7 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
   scrollTextIntoView(){
     // console.log();
     if(this.state.slideprogress >= 1 && this.state.slideprogress < this.state.slidetotal) {
-      let els = document.querySelectorAll('.text');
+      let els = document.querySelectorAll('.slideitem');
       els[this.state.slideprogress-1].scrollIntoView({behavior: "smooth"});
       // els[this.state.slideprogress-1].scrollTo(document.querySelector('.readingtitle').getBoundingClientRect().height + "px");
       // console.log(els[this.state.slideprogress -1])
@@ -95,6 +96,8 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
         document.querySelector('.activeText').classList.remove("activeText");
     }
     this.state.elements[this.state.slideprogress-1].classList.add('activeText');
+    let dummy = document.querySelector('.contentparent');
+    
   }
 
 
@@ -131,7 +134,7 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
     console.log('mount');
     this.setState(previousState => ({
         ...previousState,
-        elements: document.getElementsByClassName('text')
+        elements: document.getElementsByClassName('slideitem')
     }));
     document.getElementById('contentparent').innerHTML = this.props.content;
     document.getElementById('contentparent').querySelector('.passage-display').outerHTML = '';
