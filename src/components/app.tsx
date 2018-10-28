@@ -7,6 +7,7 @@ import 'src/components/app.css';
 import {Program} from '../pages/create/program';
 import { Present } from '../pages/present/present'
 import { Song, Plain, Reading, Cover } from './models';
+import { Button } from './test';
 
 const history = createHashHistory();
 
@@ -32,6 +33,7 @@ export default class App extends React.Component<{}, {}> {
       <Router history={history}>
         <Switch>
           <Route path="/home" component={Home} />
+          <Route path="/test" component={Button} />
           <Route path="/create/:id" render={(e: RouteComponentProps<any>) => {
             let temp = [];
             if(e.match.params.id === "TMBC"){

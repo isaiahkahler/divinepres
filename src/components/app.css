@@ -61,6 +61,10 @@ a:visited {
 
 }
 
+.chapternum {
+  font-size: 8vh;
+}
+
 .frame{font-family: 'Heebo'}
 .frame h1 {
   font-size: 5vh;
