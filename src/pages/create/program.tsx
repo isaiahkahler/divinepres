@@ -6,7 +6,7 @@ import { Song, Reading, Plain, Cover, Option } from '../../components/models';
 import { Menu } from './menu';
 import { fetchHymn, fetchHymnTitle, fetchReading } from './fetch-resources';
 import { tmbctemplate } from '../../components/app';
-
+import { ModifyModal } from './modifyModal';
 import { NavLink } from 'react-router-dom';
 
 const ListProgram = styled.ul`
@@ -41,22 +41,25 @@ interface ProgramProps {
 interface ProgramState {
   program: Array<Plain | Song | Reading | Cover>;
   menu: { active: boolean; event: number };
+  modal: { active: boolean, type: "add event" | "order events" }
 }
 export class Program extends React.Component<ProgramProps, ProgramState> {
   constructor(props: any) {
     super(props);
     this.state = {
       program: this.props.template,
-      menu: { active: false, event: -1 }
+      menu: { active: false, event: -1 },
+      modal: { active: false, type: null }
     };
   }
 
   handleCloseMenu = () => {
-    this.setState(previousState => ({
-      ...previousState,
-      menu: { active: false, event: -1 }
-    }));
+    this.setState({ menu: { active: false, event: -1 } });
   };
+
+  handleCloseModal = () => {
+    this.setState({ modal: { active: false, type: null } })
+  }
 
   generateMenu() {
     if (this.state.menu.active) {
@@ -73,6 +76,19 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     return <div />;
   }
 
+  generateModal() {
+    if (this.state.modal.active) {
+      return (
+        <ModifyModal 
+        type={this.state.modal.type} 
+        onClose={this.handleCloseModal} 
+        onSubmit={(newProgram) => this.setState({program: newProgram})}
+        program={this.state.program}
+        />
+      )
+    }
+  }
+
   handleProgramEventClick = (id: number) => {
     this.setState(previousState => ({
       ...previousState,
@@ -82,7 +98,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
 
   handleEventDelete = () => {
     let newProgram = this.state.program.slice();
-    newProgram.splice(this.state.menu.event,1);
+    newProgram.splice(this.state.menu.event, 1);
     this.setState(previousState => ({
       ...previousState,
       program: newProgram,
@@ -91,6 +107,15 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
 
     this.handleCloseMenu();
   };
+
+
+  handleCreateEvent = (eventType) => {
+    console.log(eventType)
+    // this.setState(previousState => ({
+    //   ...previousState,
+    //   program: [...previousState.program, {}]
+    // }))
+  }
 
   generateProgramEvents() {
     return this.state.program.map((item, index) => (
@@ -103,8 +128,8 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
       if (this.state.program[this.state.menu.event].type === 'song') {
         this.handleSongSearch(newValue);
       }
-    } else if(dataName === "readingtitle") {
-      if(this.state.program[this.state.menu.event].type === 'reading') {
+    } else if (dataName === "readingtitle") {
+      if (this.state.program[this.state.menu.event].type === 'reading') {
         this.handleReadingSearch(newValue);
       }
     } else {
@@ -134,7 +159,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     this.setState(previousState => ({
       ...previousState,
       program: newProgram,
-      menu: {event: previousState.menu.event, active: false}
+      menu: { event: previousState.menu.event, active: false }
     }));
   };
 
@@ -147,24 +172,26 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
     this.setState(previousState => ({
       ...previousState,
       program: newProgram,
-      menu: {event: previousState.menu.event, active: false}
+      menu: { event: previousState.menu.event, active: false }
     }));
   };
 
-  componentDidUpdate(){
-    if(!this.state.menu.active && this.state.menu.event !== -1){
+  componentDidUpdate() {
+    if (!this.state.menu.active && this.state.menu.event !== -1) {
       this.setState(previousState => ({
         ...previousState,
-        menu: {active: true, event: previousState.menu.event}
+        menu: { active: true, event: previousState.menu.event }
       }));
     }
   }
 
   render() {
     let menu = this.generateMenu();
+    let modal = this.generateModal();
     return (
       <React.Fragment>
         {menu}
+        {modal}
         <Page title="Create Program">
           <Subtitle>click an event to modify it</Subtitle>
           <div>
@@ -175,7 +202,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
                 onClick={this.handlePresentationMode}
               />
             </NavLink>
-            <BarItem type="button" value="add event" />
+            <BarItem type="button" value="add event" onClick={() => this.setState({ modal: { active: true, type: "add event" } })} />
 
             <BarItem type="button" value="order events" />
           </div>
