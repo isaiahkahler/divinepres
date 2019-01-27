@@ -144,3 +144,12 @@ export const PlainMap: { title: Option; type: Option } = {
     display: 'Event Type'
   },
 };
+
+export const PlainTemplate : Plain = {title: "Plain Event", type: "plain"};
+
+export const SongTemplate : Song =   {title: "Hymn - ", type: "song", songnumber: "", songtitle: "", lyrics: "", backgroundURL: "../media/song1.jpg"};
+
+export const ReadingTemplate : Reading = {title: "Scripture - ", type: "reading", readingtitle: "", content: null, page: ""};
+
+export const CoverTemplate : Cover =   {title: "Cover Event", type: "cover", backgroundURL: "../media/cover.jpg", covertitle: "", subtitle: "", fontcolor: "#fff"};
+
