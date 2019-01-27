@@ -5,27 +5,34 @@ const StyledReading = styled.div`
   /* color: #a3a3a3; */
   color: #fff;
   margin: 0 5vw;
+  /* height: 100%;
+  width: 100%; */
+  overflow: hidden;
   & h1 {
     font-size: 8vh;
   }
   & h3 {
-  font-size: 5vh;
-  margin: 0 5px;
-}
+    font-size: 5vh;
+    margin: 0 5px;
+  }
 
-& p {
-  font-size: 6.5vh;
-  font-family: 'Heebo';
-  font-weight: 500;
-  margin: 0 5px;
-}
-
+  & p {
+    font-size: 6.5vh;
+    font-family: 'Heebo';
+    font-weight: 500;
+    margin: 0 5px;
+  }
 `;
 const StyledContent = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  padding-right: 17px; /* Increase/decrease this value for cross-browser compatibility */
+  box-sizing: content-box; /* So the width will be 100% + 17px */
   overflow: auto;
-  overflow-y: -moz-hidden-unscrollable;
-  ::-webkit-scrollbar { 
-    display: none; 
+  /* overflow-y: -moz-hidden-unscrollable; */
+  ::-webkit-scrollbar {
+    display: none;
   }
 `;
 
@@ -42,10 +49,10 @@ const StyledTitleSlide = styled.div`
   transition: 1s;
   color: #fff;
   h1 {
-      font-size: 10vh;
+    font-size: 10vh;
   }
   h2 {
-      font-size: 5vh;
+    font-size: 5vh;
   }
 `;
 
@@ -79,32 +86,28 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
     };
   }
 
-  scrollTextIntoView(){
+  scrollTextIntoView() {
     // console.log();
-    if(this.state.slideprogress >= 1 && this.state.slideprogress < this.state.slidetotal) {
+    if (this.state.slideprogress >= 1 && this.state.slideprogress < this.state.slidetotal) {
       let els = document.querySelectorAll('.slideitem');
-      els[this.state.slideprogress-1].scrollIntoView({behavior: "smooth"});
+      els[this.state.slideprogress - 1].scrollIntoView({ behavior: 'smooth' });
       // els[this.state.slideprogress-1].scrollTo(document.querySelector('.readingtitle').getBoundingClientRect().height + "px");
       // console.log(els[this.state.slideprogress -1])
-         //this.state.elements[this.state.slideprogress - 1].scrollIntoView({behavior: "smooth"});
-        this.highlightActiveVerse();
+      //this.state.elements[this.state.slideprogress - 1].scrollIntoView({behavior: "smooth"});
+      this.highlightActiveVerse();
     }
   }
 
   highlightActiveVerse = () => {
-    if(document.querySelector('.activeText') !== null){
-        document.querySelector('.activeText').classList.remove("activeText");
+    if (document.querySelector('.activeText') !== null) {
+      document.querySelector('.activeText').classList.remove('activeText');
     }
-    this.state.elements[this.state.slideprogress-1].classList.add('activeText');
+    this.state.elements[this.state.slideprogress - 1].classList.add('activeText');
     let dummy = document.querySelector('.contentparent');
-    
-  }
-
+  };
 
   componentDidUpdate() {
-
     this.scrollTextIntoView();
-    
 
     if (this.state.slideindex < this.props.slideindex) {
       if (this.state.slideprogress + 1 === this.state.slidetotal) {
@@ -133,13 +136,13 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
   componentDidMount() {
     console.log('mount');
     this.setState(previousState => ({
-        ...previousState,
-        elements: document.getElementsByClassName('slideitem')
+      ...previousState,
+      elements: document.getElementsByClassName('slideitem')
     }));
     document.getElementById('contentparent').innerHTML = this.props.content;
     document.getElementById('contentparent').querySelector('.passage-display').outerHTML = '';
-    while(document.getElementById('contentparent').querySelector('.footnote') !== null){
-        document.querySelector('.footnote').outerHTML ='';
+    while (document.getElementById('contentparent').querySelector('.footnote') !== null) {
+      document.querySelector('.footnote').outerHTML = '';
     }
     document.getElementById('contentparent').style.height =
       document.querySelector('.present').getBoundingClientRect().height -
@@ -148,7 +151,9 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
   }
 
   generateTitleSlide() {
-      if(this.state.slideprogress !== 0){return <div/>;}
+    if (this.state.slideprogress !== 0) {
+      return <div />;
+    }
     return (
       <StyledTitleSlide>
         <h1>{this.props.readingtitle}</h1>
@@ -162,9 +167,7 @@ export class ReadingSlide extends React.Component<ReadingSlideProps, ReadingSlid
       <div className="slide animated fadeIn">
         {this.generateTitleSlide()}
         <StyledReading className="reading">
-          <h1 id="readingtitle">
-            {this.props.readingtitle}
-          </h1>
+          <h1 id="readingtitle">{this.props.readingtitle}</h1>
           <StyledContent id="contentparent" />
         </StyledReading>
       </div>

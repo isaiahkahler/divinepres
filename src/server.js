@@ -46,14 +46,21 @@ app.get('/api/reading/:id', async (req, res) => {
 
 
 async function fetchReading(passage) {
-  const response = await fetch(`https://www.biblegateway.com/passage/?search=${passage.replace(" ", "+")}&version=NKJV`);
+  const bookName = passage.substring(0,passage.indexOf(' '))
+  const bookVerses = passage.substring(passage.indexOf(' ') + 1)
+  console.log(`https://www.biblegateway.com/passage/?search=${bookName}+${encodeURIComponent(bookVerses)}&version=NKJV`)
+  const response = await fetch(`https://www.biblegateway.com/passage/?search=${bookName}+${encodeURIComponent(bookVerses)}&version=NKJV`);
   const readingHTML = await response.text();
   const document = new JSDOM(readingHTML).window.document;
   const dummyElement = document.createElement('div');
   dummyElement.innerHTML = readingHTML;
   const passageElement = dummyElement.querySelector('.passage-content');
-  passageElement.querySelector(".footnotes").outerHTML = '';
-  passageElement.querySelector(".crossrefs").outerHTML = '';
+  if(!!passageElement.querySelector(".footnotes")){
+    passageElement.querySelector(".footnotes").outerHTML = '';
+  }
+  if(!!passageElement.querySelector(".crossrefs")){
+    passageElement.querySelector(".crossrefs").outerHTML = '';
+  }
 
 
   let chapters = passageElement.getElementsByClassName('chapternum');
