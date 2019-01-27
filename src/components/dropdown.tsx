@@ -36,7 +36,7 @@ interface DropdownProps {
   options: Array<string> | undefined;
   onSubmit?: any;
   submitOnChange?: boolean;
-  update: boolean;
+  // update: boolean;
 }
 interface DropdownState {
   value: string;
@@ -52,15 +52,17 @@ export class Dropdown extends React.Component<DropdownProps, DropdownState> {
   }
 
   handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    this.setState({ value: event.currentTarget.value });
+    this.setState({ value: event.currentTarget.value }, () => {
+      this.props.submitOnChange && this.handleSubmit();
+    });
   };
 
-  componentDidUpdate(previousProps: DropdownProps, previousState: DropdownState) {
-    this.props.submitOnChange && this.handleSubmit();
-    if(this.props.update){
-      this.handleSubmit();
-    }
-  }
+  // componentDidUpdate(previousProps: DropdownProps, previousState: DropdownState) {
+    // this.props.submitOnChange && this.handleSubmit();
+    // if(this.props.update){
+    //   this.handleSubmit();
+    // }
+  // }
 
   mapOptions() {
     if(!!this.props.options){
