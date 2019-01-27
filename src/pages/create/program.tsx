@@ -5,7 +5,6 @@ import { ProgramEvent } from './event';
 import { Song, Reading, Plain, Cover, Option } from '../../components/models';
 import { Menu } from './menu';
 import { fetchHymn, fetchHymnTitle, fetchReading } from './fetch-resources';
-import { tmbctemplate } from '../../components/app';
 import { ModifyModal } from './modifyModal';
 import { NavLink } from 'react-router-dom';
 
@@ -41,7 +40,7 @@ interface ProgramProps {
 interface ProgramState {
   program: Array<Plain | Song | Reading | Cover>;
   menu: { active: boolean; event: number };
-  modal: { active: boolean, type: "add event" | "order events" }
+  modal: { active: boolean, type: "add event"}
 }
 export class Program extends React.Component<ProgramProps, ProgramState> {
   constructor(props: any) {
@@ -119,8 +118,16 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
 
   generateProgramEvents() {
     return this.state.program.map((item, index) => (
-      <ProgramEvent item={item} key={index} id={index} onClick={this.handleProgramEventClick} />
+      <ProgramEvent item={item} key={index} id={index} onClick={this.handleProgramEventClick} reorder={this.handleReorderEvents} />
     ));
+  }
+
+  handleReorderEvents = (fromID: number, toID: number) => {
+    let event = this.state.program[fromID];
+    let newProgram = this.state.program;
+    newProgram.splice(fromID, 1)
+    newProgram.splice(toID, 0, event);
+    this.setState({program: newProgram})
   }
 
   handleMenuUpdate = (dataName, newValue) => {
@@ -193,7 +200,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
         {menu}
         {modal}
         <Page title="Create Program">
-          <Subtitle>click an event to modify it</Subtitle>
+          <Subtitle>click an event to modify it. Drag and drop to reorder.</Subtitle>
           <div>
             <NavLink to="/present">
               <BarItem
@@ -204,7 +211,7 @@ export class Program extends React.Component<ProgramProps, ProgramState> {
             </NavLink>
             <BarItem type="button" value="add event" onClick={() => this.setState({ modal: { active: true, type: "add event" } })} />
 
-            <BarItem type="button" value="order events" />
+            {/* <BarItem type="button" value="order events" onClick={() => this.setState({modal: {active: true, type: "order events"} })} /> */}
           </div>
           <ListProgram>{this.generateProgramEvents()}</ListProgram>
         </Page>
